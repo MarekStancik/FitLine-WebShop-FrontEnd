@@ -1,0 +1,35 @@
+<div class="btn-group" dropdown>
+    <input 
+        dropdownToggle
+        class="form-control mr-sm-2" 
+        type="search" 
+        placeholder="Search products"
+        aria-label="Search"
+        aria-controls="dropdown-basic"
+        [(ngModel)]="searchText"
+        >
+    <ul id="dropdown-basic"
+        *dropdownMenu 
+        class="dropdown-menu" 
+        role="menu" 
+        aria-labelledby="button-basic"
+        >
+        <li role="menuitem" *ngFor="let product of allProducts | productsNameFilter: searchText">
+            <a class="dropdown-item" [routerLink]="['/product',product.id]" >{{product.name}}</a>
+        </li>
+    </ul>
+</div>
+
+<button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>   
+<!--
+    <form class="form-inline my-2 my-lg-0">
+        <input 
+            class="form-control mr-sm-2" 
+            type="search" 
+            placeholder="Search text"
+            aria-label="Search"
+            [(ngModel)]="searchText"
+            >
+        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+    </form>
+    -->
