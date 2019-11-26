@@ -1,0 +1,33 @@
+<div *ngIf="product" class="container">
+    <div class="row">
+        <div class="col">
+            <h5 class="row">{{product.name}}</h5>
+            
+            <carousel>
+                <slide *ngFor="let image of product.images">
+                    <img src="{{image}}" alt="{{product.name}}" style="display: block; width: 100%;">
+                </slide>
+
+                <slide *ngIf="!product.images">
+                    <img src="https://increasify.com.au/wp-content/uploads/2016/08/default-image.png" alt="{{product.name}}">
+                </slide>
+            </carousel>
+        </div>
+        
+        <div class="col">
+            <p>{{product.description}}</p>
+            <div class="card">
+                
+                <div class="card-body">
+                    <p>{{product.price}}</p>
+                </div>
+
+                <div class="card-body text-right">
+                    <button class="btn btn-primary">Buy</button>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+

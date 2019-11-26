@@ -1,0 +1,63 @@
+<!--Start of component, main container is nav-->
+<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+    
+    <!--The main element on the left of navbar which redirects to main page-->
+    <a class="navbar-brand" routerLink="/" (click)="selectedSection = null">FIT line</a>
+
+    <!--Navbar Items-->
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <!--Main Sections
+            MainSections are generated via ngFor 
+            for easier route mapping and section enabling-->
+            <li *ngFor="let section of sections" class="nav-item">
+                <a *ngIf="shouldShowSection(section)"
+                    routerLink="{{section.link}}"
+                    class="nav-link" 
+                    [class.active]="section === selectedSection"
+                    (click)="onSelect(section)"
+                    >
+                    {{section.name}}
+                </a>
+            </li>
+        </ul>
+
+        <!--Search sections-->
+        <div class="btn-group" dropdown>
+            <input 
+                dropdownToggle
+                class="form-control mr-sm-2" 
+                type="search" 
+                placeholder="Search products"
+                aria-label="Search"
+                aria-controls="dropdown-basic"
+                [(ngModel)]="searchText"
+                >
+            <ul id="dropdown-basic"
+                *dropdownMenu 
+                class="dropdown-menu" 
+                role="menu" 
+                aria-labelledby="button-basic"
+                >
+                <li role="menuitem" *ngFor="let product of allProducts | productsNameFilter: searchText">
+                    <a class="dropdown-item" [routerLink]="['/product',product.id]" >{{product.name}}</a>
+                </li>
+            </ul>
+            </div>
+            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>   
+            <fa-icon [icon]="['far','square']"></fa-icon>
+<!--
+        <form class="form-inline my-2 my-lg-0">
+            <input 
+                class="form-control mr-sm-2" 
+                type="search" 
+                placeholder="Search text"
+                aria-label="Search"
+                [(ngModel)]="searchText"
+                >
+            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+        </form>
+        -->
+    </div>
+
+</nav>
