@@ -2,6 +2,9 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.12.
 
+This project is using ngx-bootstrap
+Run 'npm install ngx-bootstrap --save' in project folder to install bootstrap dependencies
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
