@@ -17,6 +17,15 @@ import { ProductsSearchBarComponent } from './products/products-search-bar/produ
 import { LoginViewComponent } from './users/login-view/login-view.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { RegisterViewComponent } from './users/register-view/register-view.component';
+import { AlertModule } from 'ngx-bootstrap/alert';
+import { FileUploadComponent } from './shared/file-upload/file-upload.component';
+import { UserOrdersViewComponent } from './users/user-orders-view/user-orders-view.component';
+import { UserDetailsComponent } from './users/user-profile-view/user-details/user-details.component';
+import { UserDiscountsComponent } from './users/user-profile-view/user-discounts/user-discounts.component';
+import { UserBillingAddressComponent } from './users/user-profile-view/user-billing-address/user-billing-address.component';
+import { UserNewsSubsComponent } from './users/user-profile-view/user-news-subs/user-news-subs.component';
+import { UserProfileMenuComponent } from './users/user-profile-view/user-profile-menu/user-profile-menu.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +37,14 @@ import { RegisterViewComponent } from './users/register-view/register-view.compo
     UserMenuComponent,
     ProductsSearchBarComponent,
     LoginViewComponent,
-    RegisterViewComponent
+    RegisterViewComponent,
+    FileUploadComponent,
+    UserOrdersViewComponent,
+    UserDetailsComponent,
+    UserDiscountsComponent,
+    UserBillingAddressComponent,
+    UserNewsSubsComponent,
+    UserProfileMenuComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +54,8 @@ import { RegisterViewComponent } from './users/register-view/register-view.compo
     ReactiveFormsModule,
     BsDropdownModule.forRoot(),
     CarouselModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    AlertModule.forRoot()
   ],
   entryComponents:[
     LoginViewComponent

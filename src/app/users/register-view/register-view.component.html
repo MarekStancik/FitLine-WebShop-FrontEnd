@@ -1,1 +1,74 @@
-<p>register-view works!</p>
+<div class="container">
+    <div class="row mt-3">
+        <form class="col-6" [formGroup]="formRegister" (ngSubmit)="register()">
+            <fieldset>
+                <legend class="text-center">Register User</legend>
+
+                <div class="form-field">
+                    <label class="row">Email:</label>
+                    <input class="row mb-1" name="email" type="email" formControlName="email">
+                </div>
+
+                <alert class="row" *ngIf="emailMessage" type="danger">
+                    {{emailMessage}}
+                </alert>
+
+                <div class="form-field">
+                    <label class="row">Password:</label>
+                    <input class="row mb-1" name="password" formControlName="password" 
+                        type="password">
+                </div>
+
+                <div class="form-field">
+                    <label class="row">Repeat Password:</label>
+                    <input class="row mb-1" name="password" formControlName="repeatPassword" 
+                        type="password">
+                </div>
+
+                <alert class="row" *ngIf="passwordMessage" type="danger">
+                    {{passwordMessage}}
+                </alert>
+
+                <div class="form-field">
+                    <label class="row">First Name:</label>
+                    <input class="row mb-1" name="firstName" formControlName="firstName">
+                </div>
+
+                <div class="form-field">
+                    <label class="row">Last Name:</label>
+                    <input class="row mb-1" name="lastName" formControlName="lastName">
+                </div>
+
+                <alert class="row" *ngIf="nameMessage" type="danger">
+                    {{nameMessage}}
+                </alert>
+
+                <div class="form-field">
+                    <label class="row">Phone:</label>
+                    <input class="row mb-1" name="phone" type="tel" formControlName="phone">
+                </div>
+
+                <div class="form-field">
+                    <label class="row">Organization:</label>
+                    <input class="row mb-1" name="organization" formControlName="organization">
+                </div>
+            </fieldset>
+
+            <div class="row mt-2 mb-2">
+                <label class="col-10">I am well aware that you are going to steal my data</label>
+                <input class="col" type="checkbox" formControlName="userAgreement">
+            </div>
+
+            <alert class="row" *ngIf="!userAgrees" type="danger">
+                You have to agree with the rules
+            </alert>
+            
+            <button type="submit" class="btn btn-primary row" style="width: 100%;">Register</button>
+
+            <alert class="row" *ngIf="registerFailureMessage" type="danger">
+                {{registerFailureMessage}}
+            </alert>
+        </form>
+    </div>
+
+</div>

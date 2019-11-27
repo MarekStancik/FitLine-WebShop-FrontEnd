@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap';
 import { AuthService } from 'src/app/shared/auth.service';
 
@@ -13,8 +13,8 @@ export class LoginViewComponent implements OnInit {
   isWrongPass = false;
 
   loginForm = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl('')
+    username: new FormControl(null,Validators.required),
+    password: new FormControl(null,Validators.required)
   });
 
   constructor(public bsModalRef: BsModalRef,private authService: AuthService) { }

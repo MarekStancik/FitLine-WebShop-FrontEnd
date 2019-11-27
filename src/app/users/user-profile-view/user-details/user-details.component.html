@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="row mb-3 mt-3">
+        <div class="col">
+            <app-user-profile-menu></app-user-profile-menu>
+        </div>
+
+        <div class="col">
+            <form [formGroup]="formUserDetails">
+                <fieldset>
+                    <div class="form-field">
+                        <label class="row">Email:</label>
+                        <input class="row mb-1" name="email" formControlName="email">
+                    </div>
+
+                    <div class="form-field">
+                        <label class="row">First Name:</label>
+                        <input class="row mb-1" name="firstName" formControlName="firstName">
+                    </div>
+    
+                    <div class="form-field">
+                        <label class="row">Last Name:</label>
+                        <input class="row mb-1" name="lastName" formControlName="lastName">
+                    </div>
+
+                    <div class="form-field">
+                        <label class="row">Phone:</label>
+                        <input class="row mb-1" name="phone" type="tel" formControlName="phone">
+                    </div>
+    
+                    <div class="form-field">
+                        <label class="row">Organization:</label>
+                        <input class="row mb-1" name="organization" formControlName="organization">
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
+

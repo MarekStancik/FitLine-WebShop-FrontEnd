@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 interface LoginModel{
+  id: number;
   username: string;
   password: string;
   isAdmin: boolean;
@@ -14,6 +15,7 @@ export class AuthService {
 
   users: LoginModel[] = [
     {
+      id: 1,
       username: 'marek',
       password: 'passwordik',
       isAdmin: true
@@ -39,7 +41,7 @@ export class AuthService {
     for (let index = 0; index < this.users.length; index++) {
       const element = this.users[index];
       if(element.username === username && element.password === password){
-        localStorage.setItem('currentUser',JSON.stringify({username,password,isAdmin: element.isAdmin,token: 'token'}));
+        localStorage.setItem('currentUser',JSON.stringify({id: element.id,username,password,isAdmin: element.isAdmin,token: 'token'}));
         return of(true);
       }
     }
@@ -54,6 +56,11 @@ export class AuthService {
   getUsername(): string {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     return currentUser ? currentUser.username : null;
+  }
+
+  getUserId(): number{
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    return currentUser ? currentUser.id : null;
   }
 
   isUserAdmin() : boolean{
