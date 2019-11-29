@@ -18,7 +18,9 @@ export class ProductService {
       description: 'really good stuff',
       images: null,
       price: 20.99,
-      supplier: null
+      supplier: 'Scitec',
+      rating: 5,
+      soldCount: 25
     },
     {
       id: 2,
@@ -27,7 +29,9 @@ export class ProductService {
       description: 'not a really good stuff',
       images: null,
       price: 16.99,
-      supplier: null
+      supplier: 'Weider',
+      rating: 4.5,
+      soldCount: 30
     },
     {
       id: 3,
@@ -36,11 +40,39 @@ export class ProductService {
       description: 'easy cheasy',
       images: null,
       price: 10.99,
-      supplier: null
-    }
+      supplier: null,
+      rating: 3
+    },
+    {
+      id: 4,
+      name: 'Amino Acids',
+      category: 'supplements',
+      description: 'Maybe will make your pepe bigger',
+      images: null,
+      price: 10.99,
+      supplier: 'Weider',
+      rating: 4.4,
+      soldCount: 1
+    },
   ];
 
-  constructor() { }
+  constructor() { 
+    for (let index = 5; index < 100; index++) {
+      const item = {
+        id: index,
+        name: 'product ' + index,
+        category: 'supplements',
+        description: 'Some Mock product',
+        images: null,
+        price: 10.99 + index,
+        supplier: 'supplier ' + (index % 10),
+        rating: 4.4,
+        soldCount: 1 + index 
+      }
+
+      this.allProducts.push(item);
+    }
+  }
 
   getAll(): Observable<ProductModel[]>{
     return of(this.allProducts);

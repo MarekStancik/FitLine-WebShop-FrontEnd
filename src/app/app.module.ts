@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ButtonsModule } from 'ngx-bootstrap';
+import { ButtonsModule, ProgressbarModule, PaginationModule } from 'ngx-bootstrap';
 import { NavBarComponent } from './shared/nav-bar/nav-bar.component';
 import { ProductsNameFilterPipe } from './products/shared/products-name-filter.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -25,6 +25,7 @@ import { UserDiscountsComponent } from './users/user-profile-view/user-discounts
 import { UserBillingAddressComponent } from './users/user-profile-view/user-billing-address/user-billing-address.component';
 import { UserNewsSubsComponent } from './users/user-profile-view/user-news-subs/user-news-subs.component';
 import { UserProfileMenuComponent } from './users/user-profile-view/user-profile-menu/user-profile-menu.component';
+import { BasketDropdownComponent } from './basket/basket-dropdown/basket-dropdown.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { UserProfileMenuComponent } from './users/user-profile-view/user-profile
     UserDiscountsComponent,
     UserBillingAddressComponent,
     UserNewsSubsComponent,
-    UserProfileMenuComponent
+    UserProfileMenuComponent,
+    BasketDropdownComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +57,9 @@ import { UserProfileMenuComponent } from './users/user-profile-view/user-profile
     BsDropdownModule.forRoot(),
     CarouselModule.forRoot(),
     ModalModule.forRoot(),
-    AlertModule.forRoot()
+    AlertModule.forRoot(),
+    ProgressbarModule.forRoot(),
+    PaginationModule.forRoot()
   ],
   entryComponents:[
     LoginViewComponent

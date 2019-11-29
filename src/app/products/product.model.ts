@@ -1,11 +1,11 @@
-import { SupplierModel } from '../suppliers/supplier.model';
-
 export class ProductModel {
     id: number;
     category: string;
     name: string;
     price: number;
     description: string;
-    supplier: SupplierModel;
+    supplier: string;
     images: string[];
+    rating: number;
+    soldCount?: number;
 }

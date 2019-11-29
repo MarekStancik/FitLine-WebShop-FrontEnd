@@ -11,6 +11,8 @@ import { UserDiscountsComponent } from './users/user-profile-view/user-discounts
 
 
 const routes: Routes = [
+  {path: '', redirectTo: 'products', pathMatch: 'full' },
+  {path: 'products', component: ProductListComponent},
   {path: 'product/:id', component: ProductDetailComponent},
   {path: 'products/:category', component: ProductListComponent},
   {path: 'register-user', component: RegisterViewComponent},
