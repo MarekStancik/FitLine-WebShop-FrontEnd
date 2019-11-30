@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BasketService } from '../basket.service';
+import { ProductModel } from 'src/app/products/product.model';
 
 @Component({
   selector: 'app-basket-dropdown',
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BasketDropdownComponent implements OnInit {
 
-  constructor() { }
+  constructor(private basketService: BasketService) { }
 
   ngOnInit() {
+
+  }
+
+ /* getItems(): ProductModel[]{
+    return Array.from(this.basketService.getItems().keys());
+  }*/
+
+  getItems(){
+    return this.basketService.getItems();
+  }
+
+  getTotalPrice(): number{
+    return this.basketService.getTotalAmount();
   }
 
 }

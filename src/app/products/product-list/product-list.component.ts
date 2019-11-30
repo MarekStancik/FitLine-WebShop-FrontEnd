@@ -3,6 +3,7 @@ import { ProductModel } from '../product.model';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ProductService } from '../shared/product.service';
 import { switchMap, filter } from 'rxjs/operators';
+import { BasketService } from 'src/app/basket/basket.service';
 
 enum OrderBy
 {
@@ -43,9 +44,12 @@ export class ProductListComponent implements OnInit {
   //Number of currently openede page
   currentPage = 1;
 
-  itemsPerPage = 10;
+  itemsPerPage = 12;
 
-  constructor(private route: ActivatedRoute,private productService: ProductService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private productService: ProductService,
+    private basketService: BasketService) { }
 
   ngOnInit() {
     this.brandFilter = new Map<string,boolean>();
@@ -172,4 +176,7 @@ export class ProductListComponent implements OnInit {
     return this.filteredProducts.slice((this.currentPage-1) * this.itemsPerPage,this.currentPage * this.itemsPerPage);
   }
 
+  addItemToBasket(product: ProductModel){
+    this.basketService.addItem(product,1);
+  }
 }

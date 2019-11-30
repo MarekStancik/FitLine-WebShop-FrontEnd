@@ -3,27 +3,27 @@
     <div class="row mt-5">
 
         <!--Filter Pane on the left-->
-        <div class="col-xs filter-list">
-            <div>
-                <h6 class="row text-center">Price</h6>
-                <span class="row">From:</span>
-                <input type="number" class="row price-input" [(ngModel)]="priceFrom">
-                <span class="row">To:</span>
-                <input type="number" class="row price-input" [(ngModel)]="priceTo">
-                <hr>
-                <h6 class="row text-center">Brands</h6>
-                <label *ngFor="let brand of brandFilter | keyvalue" class="row checkbox-label">
-                    <input type="checkbox" name="checkbox" class="mr-1 checkbox-input" 
-                        [checked]="brand.value" (click)="toggleBrandFilter(brand.key)">{{brand.key}}
-                </label>
-            </div>
+        <div class="col-xs filter-pane">
+            <h6 class="row text-center">Price</h6>
+            <span class="row">From:</span>
+            <input type="number" class="row price-input" [(ngModel)]="priceFrom">
+            <span class="row">To:</span>
+            <input type="number" class="row price-input" [(ngModel)]="priceTo">
+            <hr>
+            <h6 class="row text-center">Brands</h6>
+            <span *ngFor="let brand of brandFilter | keyvalue" 
+                class="row order-by-tab order-by-tab-vertical"
+                [class.active]="brand.value"
+                (click)="toggleBrandFilter(brand.key)">
+                {{brand.key}}
+            </span>
         </div>
 
         <div class="col-lg">
             <!--Order By Tabs-->
             <div class="row">
                 <div *ngFor="let value of orderValues()" 
-                    class="order-by-tab col-sm text-center"
+                    class="order-by-tab order-by-tab-horizontal col-sm text-center"
                     [class.active]="ordering === value"
                     (click)="ordering = value">
                     {{value}}
@@ -39,16 +39,21 @@
                             <span>{{product.rating | number:'1.0-1'}} / {{maxRating}}</span>
                         </progressbar>
                         <h5 class="card-title clickable-text" [routerLink]="['/product',product.id]">{{product.name}}</h5>
-                        <h6>{{product.price | number:'1.2-2'}}</h6>
                         <p class="card-text">{{product.description}}</p>
                         <div class="card-body text-right">
-                            <button class="btn btn-primary">Buy</button>
+                            <h6>{{product.price | number:'1.2-2'}} €</h6>
+                            <button class="btn btn-primary" (click)="addItemToBasket(product)">Add To Basket</button>
                         </div>
                     </div>
                 </div>
+
                 <!--Paging pane-->
                 <div class="col-xs-12 col-12 mt-2">
-                    <pagination [totalItems]="filteredProducts.length" (pageChanged)="pageChanged($event)" [maxSize]="12"></pagination>
+                    <pagination 
+                        [totalItems]="filteredProducts.length" 
+                        [maxSize]="12"
+                        [itemsPerPage]="itemsPerPage"
+                        (pageChanged)="pageChanged($event)"></pagination>
                 </div>
             </div>
         </div>

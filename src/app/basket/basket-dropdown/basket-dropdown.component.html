@@ -1,1 +1,27 @@
-<p>basket-dropdown works!</p>
+<div class="btn-group" dropdown>
+    <button dropdownToggle type="button" 
+        class="btn btn-primary dropdown-toggle" 
+        aria-controls="dropdown-basic"><span class="basket-btn-counter">{{getItems().size }}</span>Basket
+    </button>
+    <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+      role="menu" aria-labelledby="button-basic">
+        <li *ngFor="let item of getItems() | keyvalue" 
+            role="menuitem" 
+            class="basket-dropdown-item">
+            <div class="row pl-3 text-overflow clickable-text" [routerLink]="['/product',item.key.id]">{{item.key.name}}</div>
+            <div class="row">
+                <div class="col pl-3 mr-1">{{item.value}} x</div>
+                <div class="col mr-1 text-right">{{item.key.price | number:'1.2-2'}} €</div>
+            </div>
+        </li>
+
+        <li role="menuitem" class="basket-dropdown-item">
+            <div class="row mt-2 mb-2">
+                <div class="col pl-3 mr-1">Price: </div>
+                <div class="col mr-1 text-right">{{getTotalPrice() | number:'1.2-2'}} €</div>
+            </div>
+        </li>
+        <li role="menuitem"><a class="dropdown-item" href="#">Open Basket</a></li>
+        <li role="menuitem"><a class="dropdown-item" href="#">Proceed to Payment</a></li>
+    </ul>
+</div>

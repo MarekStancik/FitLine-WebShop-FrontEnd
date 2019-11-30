@@ -47,7 +47,7 @@ export class ProductService {
       id: 4,
       name: 'Amino Acids',
       category: 'supplements',
-      description: 'Maybe will make your pepe bigger',
+      description: 'Maybe will make your pepe bigger and maybe it will make also this text longer because I am trying to see how strangely everything behaves',
       images: null,
       price: 10.99,
       supplier: 'Weider',
