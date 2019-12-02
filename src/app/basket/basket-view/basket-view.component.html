@@ -1,0 +1,54 @@
+<div class="container mt-5">
+    <div *ngIf="getItems().size > 0; else noItems">
+        <h4 class="clickable-text" (click)="goBack()">&lt; GET BACK TO SHOPPING</h4>
+        <div *ngFor="let item of getItems() | keyvalue" class="basket-card">
+            <div class="row no-gutters">
+                
+                <!--Image of the item-->
+                <div class="col-md-2">
+                    <img src="../../../assets/no_image.png" alt="Product Image">
+                </div>
+
+                <!--Item info-->
+                <div class="col-sm-8">
+                    <h4 class="row clickable-text" [routerLink]="['/product',item.key.id]">{{item.key.name}}</h4>
+                    <div class="row">
+                        <label class="col-xs mr-1">Amount:</label>
+                        <!--Item Amount Pane-->
+                        <div class="col">
+                            <div class="amount-pane row">
+                                <button class="col text-center" id="amount-btn-left" (click)="incrementItem(item.key)">+</button>
+                                <div class="col text-center" id="amount-label-mid">{{item.value}}</div>
+                                <button class="col text-center" id="amount-btn-right"
+                                    [class.disabled]="item.value < 2" (click)="decrementItem(item.key)">-</button>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <label class="row">Price: {{item.key.price * item.value | number:'1.2-2'}} €</label>
+                </div>
+
+                <div class="col-sm-1 offset-1">
+                    <button class="btn btn-danger" (click)="deleteItem(item.key)">Remove</button>
+                </div>
+                
+            </div>
+        </div>
+
+        <div class="row">
+            <h2 class="col">Total Price:</h2>
+            <h2 class="col text-right">{{getTotalPrice() | number:'1.2-2'}} €</h2>
+        </div>
+        <div class="row">
+            <div class="col text-right"><button class="btn btn-primary" [routerLink]="['/payment']">Proceed to payment</button></div>
+        </div>
+    </div>
+
+    <ng-template #noItems>
+        <div class="col text-center">
+            <h1>Your Basket is Empty</h1>
+            <h2 class="clickable-text" [routerLink]="['/']">Go to shop ></h2>
+        </div>  
+        
+    </ng-template>
+</div>

@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
 
 
 interface Section{
@@ -48,37 +46,11 @@ const SECTIONS: Section[] = [
 export class NavBarComponent implements OnInit {
 
   sections: Section[];
-  selectedSection: Section;
 
-  constructor(private router: Router) { }
+  constructor() { }
 
   ngOnInit() 
   {
-
-    //Setup Sections
-    this.selectedSection = null;
     this.sections = Array.from(SECTIONS);
-
-    //Setup Selected Section
-    this.router.events
-      .pipe(
-        filter(e => e instanceof NavigationEnd)
-      )
-      .subscribe( 
-        (navEnd:NavigationEnd) => {
-          for (let index = 0; index < this.sections.length; ++index) 
-          {
-            const element = this.sections[index];
-            if(element.link === navEnd.urlAfterRedirects)
-            {
-              this.selectedSection = element;
-              break;
-            }
-          }
-      });
-  }
-
-  onSelect(section: Section){
-    this.selectedSection = section;
   }
 }

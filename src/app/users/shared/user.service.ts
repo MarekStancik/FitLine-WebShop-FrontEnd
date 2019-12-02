@@ -25,4 +25,8 @@ export class UserService {
 
     return of(user);
   }
+
+  updateUserDetails(user: UserModel): Observable<UserModel>{
+    return of(user);
+  }
 }

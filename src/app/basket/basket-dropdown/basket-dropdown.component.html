@@ -1,10 +1,13 @@
 <div class="btn-group" dropdown>
-    <button dropdownToggle type="button" 
-        class="btn btn-primary dropdown-toggle" 
-        aria-controls="dropdown-basic"><span class="basket-btn-counter">{{getItems().size }}</span>Basket
+    <!--Button plus dropdown icon-->
+    <button type="button" class="btn btn-primary" [routerLink]="['basket']"><span class="basket-btn-counter">{{getItems().size }}</span>Basket</button>
+    <button id="button-split" type="button" dropdownToggle class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+        aria-controls="dropdown-split">
     </button>
-    <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
-      role="menu" aria-labelledby="button-basic">
+
+    <!--Dropdown list-->
+    <ul id="dropdown-split" *dropdownMenu class="dropdown-menu scrollable-menu"
+        role="menu" aria-labelledby="button-split">
         <li *ngFor="let item of getItems() | keyvalue" 
             role="menuitem" 
             class="basket-dropdown-item">
@@ -15,13 +18,13 @@
             </div>
         </li>
 
-        <li role="menuitem" class="basket-dropdown-item">
+        <li role="menuitem" class="basket-dropdown-item mb-2">
             <div class="row mt-2 mb-2">
                 <div class="col pl-3 mr-1">Price: </div>
                 <div class="col mr-1 text-right">{{getTotalPrice() | number:'1.2-2'}} €</div>
             </div>
         </li>
-        <li role="menuitem"><a class="dropdown-item" href="#">Open Basket</a></li>
-        <li role="menuitem"><a class="dropdown-item" href="#">Proceed to Payment</a></li>
+        <li role="menuitem"><a class="dropdown-item" [routerLink]="['/basket']" routerLinkActive="active">Open Basket</a></li>
+        <li role="menuitem"><a class="dropdown-item" [routerLink]="['/payment']" routerLinkActive="active">Proceed to Payment</a></li>
     </ul>
 </div>

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { UserModel } from '../../user-model';
 
 @Component({
   selector: 'app-user-discounts',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-discounts.component.scss']
 })
 export class UserDiscountsComponent implements OnInit {
+
+  @Input() user: UserModel;
 
   constructor() { }
 

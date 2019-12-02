@@ -1,0 +1,42 @@
+.basket-card{
+    border: 1px solid #007bff;
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+.basket-card:hover{
+    box-shadow: 2px 2px whitesmoke;
+}
+
+.basket-card img{
+    border-radius: 15px;
+    max-width: 120px;
+    max-height: 120px;
+}
+
+.amount-pane{
+    background:#007bff;
+    border-radius: 0.25rem;
+    max-width: 140px;
+}
+
+.amount-pane button{
+    background: transparent;
+    border: none;
+    color: white;
+}
+
+#amount-label-mid{
+    background: white;
+    border-radius: 0.25rem;
+    margin: 2px 5px;
+}
+
+#amount-btn-right{
+    border-left: 1px solid white;
+}
+
+#amount-btn-left{
+    border-right: 1px solid white;
+}

@@ -52,18 +52,19 @@ export class ProductListComponent implements OnInit {
     private basketService: BasketService) { }
 
   ngOnInit() {
-    this.brandFilter = new Map<string,boolean>();
     this._priceFrom = 0;
     this._priceTo = 0;
+    this._ordering = OrderBy.Rating;
 
     this.route.paramMap
       .pipe(
         switchMap((params: ParamMap) =>
-           params.get('category') 
+           params.get('category') !== null 
             ? this.productService.getAllInCategory(params.get('category')) 
             : this.productService.getAll())
       )
       .subscribe(products =>{ 
+        this.brandFilter = new Map<string,boolean>();
         this.products = products;
         this.products.forEach(element => {
           if(element.supplier){
@@ -74,8 +75,6 @@ export class ProductListComponent implements OnInit {
         this._priceTo = Math.max(...products.map(o => o.price),0);
         this.filterProducts();
       });
-
-    this._ordering = OrderBy.Rating;
   }
 
   set ordering(order: OrderBy){

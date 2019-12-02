@@ -11,12 +11,14 @@
             <input type="number" class="row price-input" [(ngModel)]="priceTo">
             <hr>
             <h6 class="row text-center">Brands</h6>
-            <span *ngFor="let brand of brandFilter | keyvalue" 
-                class="row order-by-tab order-by-tab-vertical"
-                [class.active]="brand.value"
-                (click)="toggleBrandFilter(brand.key)">
-                {{brand.key}}
-            </span>
+            <div *ngIf="brandFilter.size > 0">
+                <span *ngFor="let brand of brandFilter | keyvalue" 
+                    class="row order-by-tab order-by-tab-vertical"
+                    [class.active]="brand.value"
+                    (click)="toggleBrandFilter(brand.key)">
+                    {{brand.key}}
+                </span>
+            </div>
         </div>
 
         <div class="col-lg">
@@ -31,7 +33,7 @@
             </div>
         
             <!--Product list-->
-            <div class="row product-list">
+            <div *ngIf="filteredProducts.length > 0; else noProducts" class="row product-list">
                 <div *ngFor="let product of pagedFilteredProducts()" class="card col-md-4 pt-3 product-card">
                     <img [src]="product.images ? product.images[0] : '../../../assets/no_image.png'" class="card-img-top" alt="...">
                     <div class="card-body">
@@ -56,6 +58,10 @@
                         (pageChanged)="pageChanged($event)"></pagination>
                 </div>
             </div>
+
+            <ng-template #noProducts>
+                THERE ARE NO PRODUCTS
+            </ng-template>
         </div>
     </div>
 </div>

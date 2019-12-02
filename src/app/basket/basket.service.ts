@@ -28,10 +28,20 @@ export class BasketService {
     this.totalAmount += product.price * count;
   }
 
-  deleteItem(product: ProductModel)
+  deleteItem(product: ProductModel,count: number)
   {
-    this.items.delete(product);
-    this.totalAmount -= product.price;
+    const item = this.items.get(product);
+    const difference = item.valueOf() - count;
+    if(count === 0 || difference === 0) //We can completely remove the product
+    {
+      this.totalAmount -= this.items.get(product).valueOf() * product.price;
+      this.items.delete(product);
+    }
+    else //Just decrement count
+    {
+      this.totalAmount -= product.price;
+      this.items.set(product,item.valueOf() -1);
+    }
   }
 
   getItems(): Map<ProductModel,number>{

@@ -2,7 +2,7 @@
 <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
     
     <!--The main element on the left of navbar which redirects to main page-->
-    <a class="navbar-brand" routerLink="/" (click)="selectedSection = null">FIT line</a>
+    <a class="navbar-brand" routerLink="/">FIT line</a>
 
     <!--Navbar Items-->
     <div class="collapse navbar-collapse">
@@ -11,11 +11,7 @@
             MainSections are generated via ngFor 
             for easier route mapping and section enabling-->
             <li *ngFor="let section of sections" class="nav-item">
-                <a  routerLink="{{section.link}}"
-                    class="nav-link" 
-                    [class.active]="section === selectedSection"
-                    (click)="onSelect(section)"
-                    >
+                <a [routerLink]="[section.link]" routerLinkActive="active" class="nav-link">
                     {{section.name}}
                 </a>
             </li>

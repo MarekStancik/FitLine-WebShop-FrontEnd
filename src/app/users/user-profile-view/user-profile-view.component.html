@@ -1,0 +1,9 @@
+<div class="container">
+    <div class="row">
+        <app-user-profile-menu [user]="user" class="col"></app-user-profile-menu>
+        <app-user-details [user]="user" class="col" *ngIf="section === 'details' || !section"></app-user-details>
+        <app-user-billing-address [user]="user" class="col" *ngIf="section === 'address'"></app-user-billing-address>
+        <app-user-news-subs [user]="user" class="col" *ngIf="section === 'subs'"></app-user-news-subs>
+        <app-user-discounts [user]="user" class="col" *ngIf="section === 'cards'"></app-user-discounts>
+    </div>
+</div>

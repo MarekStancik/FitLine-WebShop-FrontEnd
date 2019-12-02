@@ -1,40 +1,45 @@
-<div class="container">
-    <div class="row mb-3 mt-3">
-        <div class="col">
-            <app-user-profile-menu></app-user-profile-menu>
+<div>
+    <form [formGroup]="formUserDetails" (ngSubmit)="updateUser()">
+        <fieldset>
+            <div class="form-field">
+                <label class="row">Email:</label>
+                <input class="row mb-1" name="email" formControlName="email">
+            </div>
+
+            <div class="form-field">
+                <label class="row">First Name:</label>
+                <input class="row mb-1" name="firstName" formControlName="firstName">
+            </div>
+
+            <div class="form-field">
+                <label class="row">Last Name:</label>
+                <input class="row mb-1" name="lastName" formControlName="lastName">
+            </div>
+
+            <div class="form-field">
+                <label class="row">Phone:</label>
+                <input class="row mb-1" name="phone" type="tel" formControlName="phone">
+            </div>
+
+            <div class="form-field">
+                <label class="row">Organization:</label>
+                <input class="row mb-1" name="organization" formControlName="organization">
+            </div>
+        </fieldset>
+
+        <alert *ngIf="errorMessage" type="danger" [dismissible]="true" (onClosed)="onCloseErrorAlert()">
+            {{errorMessage}}
+        </alert>
+
+        <alert *ngIf="updated" type="success" [dismissible]="true" (onClosed)="onCloseSuccessAlert()">
+            User information updated
+        </alert>
+
+        <button type="submit" class="btn btn-primary" [class.disabled]="updating" >Update</button>
+        <div *ngIf="updating" class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
         </div>
-
-        <div class="col">
-            <form [formGroup]="formUserDetails">
-                <fieldset>
-                    <div class="form-field">
-                        <label class="row">Email:</label>
-                        <input class="row mb-1" name="email" formControlName="email">
-                    </div>
-
-                    <div class="form-field">
-                        <label class="row">First Name:</label>
-                        <input class="row mb-1" name="firstName" formControlName="firstName">
-                    </div>
-    
-                    <div class="form-field">
-                        <label class="row">Last Name:</label>
-                        <input class="row mb-1" name="lastName" formControlName="lastName">
-                    </div>
-
-                    <div class="form-field">
-                        <label class="row">Phone:</label>
-                        <input class="row mb-1" name="phone" type="tel" formControlName="phone">
-                    </div>
-    
-                    <div class="form-field">
-                        <label class="row">Organization:</label>
-                        <input class="row mb-1" name="organization" formControlName="organization">
-                    </div>
-                </fieldset>
-            </form>
-        </div>
-    </div>
+    </form>
 </div>
 
 

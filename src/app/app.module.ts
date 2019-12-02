@@ -26,6 +26,9 @@ import { UserBillingAddressComponent } from './users/user-profile-view/user-bill
 import { UserNewsSubsComponent } from './users/user-profile-view/user-news-subs/user-news-subs.component';
 import { UserProfileMenuComponent } from './users/user-profile-view/user-profile-menu/user-profile-menu.component';
 import { BasketDropdownComponent } from './basket/basket-dropdown/basket-dropdown.component';
+import { BasketViewComponent } from './basket/basket-view/basket-view.component';
+import { PaymentViewComponent } from './payment/payment-view/payment-view.component';
+import { UserProfileViewComponent } from './users/user-profile-view/user-profile-view.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +49,10 @@ import { BasketDropdownComponent } from './basket/basket-dropdown/basket-dropdow
     UserBillingAddressComponent,
     UserNewsSubsComponent,
     UserProfileMenuComponent,
-    BasketDropdownComponent
+    BasketDropdownComponent,
+    BasketViewComponent,
+    PaymentViewComponent,
+    UserProfileViewComponent
   ],
   imports: [
     BrowserModule,
