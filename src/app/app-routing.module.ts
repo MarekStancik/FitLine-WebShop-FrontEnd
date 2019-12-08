@@ -22,8 +22,8 @@ const routes: Routes = [
   {path: 'products/:category', component: ProductListComponent},
   {path: 'register-user', component: RegisterViewComponent},
   {path: 'user-profile/:section', component: UserProfileViewComponent},
-  /*{path: 'user-profile', redirectTo: 'user-profile/details', pathMatch: 'full' },
-  {path: 'user-profile/details',component: UserDetailsComponent},
+  {path: 'user-profile', redirectTo: 'user-profile/details', pathMatch: 'full' },
+  /*{path: 'user-profile/details',component: UserDetailsComponent},
   {path: 'user-profile/address',component: UserBillingAddressComponent},
   {path: 'user-profile/subs',component: UserNewsSubsComponent},
   {path: 'user-profile/cards',component: UserDiscountsComponent},*/

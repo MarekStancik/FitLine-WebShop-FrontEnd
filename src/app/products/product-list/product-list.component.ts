@@ -4,6 +4,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ProductService } from '../shared/product.service';
 import { switchMap, filter } from 'rxjs/operators';
 import { BasketService } from 'src/app/basket/basket.service';
+import { ProductCategory } from '../product-category';
 
 enum OrderBy
 {
@@ -46,22 +47,26 @@ export class ProductListComponent implements OnInit {
 
   itemsPerPage = 12;
 
+  currentCategory: ProductCategory;
+
   constructor(
-    private route: ActivatedRoute,
-    private productService: ProductService,
-    private basketService: BasketService) { }
+    private _route: ActivatedRoute,
+    private _productService: ProductService,
+    private _basketService: BasketService) { }
 
   ngOnInit() {
     this._priceFrom = 0;
     this._priceTo = 0;
     this._ordering = OrderBy.Rating;
 
-    this.route.paramMap
+    this._route.paramMap
       .pipe(
-        switchMap((params: ParamMap) =>
-           params.get('category') !== null 
-            ? this.productService.getAllInCategory(params.get('category')) 
-            : this.productService.getAll())
+        switchMap((params: ParamMap) =>{
+          this.currentCategory = this._productService.getCategoryByName(params.get('category'));
+           return this.currentCategory !== null 
+            ? this._productService.getAllInCategory(this.currentCategory) 
+            : this._productService.getAll()
+        })
       )
       .subscribe(products =>{ 
         this.brandFilter = new Map<string,boolean>();
@@ -176,6 +181,23 @@ export class ProductListComponent implements OnInit {
   }
 
   addItemToBasket(product: ProductModel){
-    this.basketService.addItem(product,1);
+    this._basketService.addItem(product,1);
+  }
+
+  getCategoryTree():Array<string>
+  {
+    if(this.currentCategory !== null)
+    {
+      let cats = new Set<string>([this.currentCategory.name]);
+      let cat = this.currentCategory;
+      while(cat.parentCategory)
+      {
+        cat = cat.parentCategory;
+        cats.add(cat.name);
+      }
+      return Array.from(cats).reverse();
+    }
+    else
+      return null;
   }
 }

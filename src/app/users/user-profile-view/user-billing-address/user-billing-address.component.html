@@ -1,40 +1,57 @@
 <div>
-    <form [formGroup]="formUserAddress">
+    <form [formGroup]="formUserAddress" (ngSubmit)="updateAddress()">
         <fieldset>
             <div class="form-field">
-                <label class="row">Country:</label>
-                <input class="row mb-1" name="country" formControlName="country">
+                <label for="country">Country:</label>
+                <select id="country" name="country" formControlName="country">
+                    <option value="Slovakia">Slovakia</option>
+                    <option value="Denmark">Denmark</option>
+                    <option value="Sweden">Sweden</option>
+                 </select>
             </div>
 
             <div class="form-field">
-                <label class="row">Region:</label>
-                <input class="row mb-1" name="region" formControlName="region">
+                <label for="region">Region:</label>
+                <input id="region" type="text" name="region" formControlName="region">
             </div>
 
             <div class="form-field">
-                <label class="row">City:</label>
-                <input class="row mb-1" name="city" formControlName="city">
+                <label for="city">City:</label>
+                <input id="city" type="text" name="city" formControlName="city">
             </div>
 
             <div class="form-field">
-                <label class="row">Postal Code:</label>
-                <input class="row mb-1" name="postalCode" formControlName="postalCode">
+                <label for="pcode">Postal Code:</label>
+                <input id="pcode" type="text" name="postalCode" formControlName="postalCode">
             </div>
 
             <div class="form-field">
-                <label class="row">Street:</label>
-                <input class="row mb-1" name="street" formControlName="street">
+                <label for="street">Street:</label>
+                <input id="street" type="text" name="street" formControlName="street">
             </div>
 
             <div class="form-field">
-                <label class="row">Building Number:</label>
-                <input class="row mb-1" name="buildingNumber" formControlName="buildingNumber">
+                <label for="bnum">Building Number:</label>
+                <input id="bnum" type="text" name="buildingNumber" formControlName="buildingNumber">
             </div>
 
             <div class="form-field">
-                <label class="row">Floor:</label>
-                <input class="row mb-1" name="floor" formControlName="floor">
+                <label for="floor">Floor:</label>
+                <input id="floor" type="text" name="floor" formControlName="floor">
             </div>
+
+            <alert *ngIf="errorMessage" type="danger" [dismissible]="true" (onClosed)="onCloseErrorAlert()">
+                {{errorMessage}}
+            </alert>
+
+            <input type="submit" value="Update "class="btn btn-primary" [class.disabled]="updating">
+            <div *ngIf="updating" class="spinner-border text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+    
+            <alert *ngIf="updated" type="success" [dismissible]="true" (onClosed)="onCloseSuccessAlert()">
+                User address updated
+            </alert>
         </fieldset>
     </form>
 </div>

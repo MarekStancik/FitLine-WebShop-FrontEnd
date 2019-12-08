@@ -13,7 +13,7 @@ const SECTIONS: Section[] = [
   },
   {
     name: 'Clothing',
-    link: 'products/clothes'
+    link: 'products/clothing'
   },
   {
     name: 'Exercise Machines',

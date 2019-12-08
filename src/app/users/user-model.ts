@@ -1,3 +1,5 @@
+import { AddressModel } from '../address/address-model';
+
 export class UserModel {
     id: number;
     email: string;
@@ -5,4 +7,5 @@ export class UserModel {
     firstName: string;
     lastName: string;
     imageUrl: string;
+    address: AddressModel;
 }

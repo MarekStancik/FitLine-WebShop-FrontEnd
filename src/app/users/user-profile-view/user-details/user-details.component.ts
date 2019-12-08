@@ -4,6 +4,7 @@ import { UserModel } from '../../user-model';
 import { UserService } from '../../shared/user.service';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { InputValidator } from 'src/app/shared/input-validator';
 
 @Component({
   selector: 'app-user-details',
@@ -46,18 +47,25 @@ export class UserDetailsComponent implements OnInit {
 
   updateUser(){
     const user = this.formUserDetails.value;
-    this.updating = true;
-    this._userService.updateUserDetails(user)
-      .pipe(catchError((err) =>{
-        console.error(err);
-        this.errorMessage = "User update failed";
-        return of(null);
-      }))
-      .subscribe((data) =>{ 
-        this.updating = false;
-        if(data != null)
-          this.updated = true;
-      });
+
+    this.errorMessage = InputValidator.validateUserInfo(user);
+    this.updated = false;
+
+    if(this.errorMessage === '') //If there was no error on input validation
+    {
+      this.updating = true;
+      this._userService.updateUserDetails(user)
+        .pipe(catchError((err) =>{
+          console.error(err);
+          this.errorMessage = "User update failed";
+          return of(null);
+        }))
+        .subscribe((data) =>{ 
+          this.updating = false;
+          if(data != null)
+            this.updated = true;
+        });
+    }
   }
 
   onCloseErrorAlert(){

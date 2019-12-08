@@ -54,14 +54,21 @@ export class RegisterViewComponent implements OnInit {
       this.emailMessage = 'Email can\'t be empty';
     }
     
+    let passRegex = /\d/;
     if(!val.password || !val.repeatPassword){
       this.passwordMessage = "Passwords can't be empty";
     }
     else if(val.password !== val.repeatPassword){
-      this.passwordMessage = "Passwords are not identical"
+      this.passwordMessage = "Passwords are not identical";
+    }
+    else if(val.password.length < 8){
+      this.passwordMessage = "Password length has to be at least quantilion symbols";
+    }
+    else if(!val.password.match(passRegex)){
+      this.passwordMessage = 'Password has to contain unborn child of unicorn';
     }
 
-    if(!val.firstName || !val.firstName){
+    if(!val.firstName || !val.lastName){
       this.nameMessage = "Names can't be empty";
     }
 

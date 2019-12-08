@@ -9,20 +9,20 @@
     <form [formGroup]="loginForm" (ngSubmit)="login()">
         <fieldset class="container">
             <div class="form-field">
-                <label class="row">Name:</label>
-                <input class="row" name="name" formControlName="username">
+                <label for="uname">Name:</label>
+                <input id="uname" type="text" name="name" formControlName="username">
             </div>
             <div class="form-field">
-                <label class="row">Password:</label>
-                <input class="row" name="password" formControlName="password" 
+                <label for="pass">Password:</label>
+                <input id="pass" name="password" formControlName="password" 
                     type="password">
             </div>
+
+            <alert *ngIf="isWrongPass" type="danger">
+                Inserted credentials are <strong>incorrect</strong>
+            </alert>
+            <input type="submit" class="btn btn-primary" value="Login">
         </fieldset>
-    
-        <div *ngIf="isWrongPass">You stupid</div>
-        <div class="form-buttons">
-            <button type="submit" class="btn btn-primary">Login</button>
-        </div>
     </form>    
 </div>
 

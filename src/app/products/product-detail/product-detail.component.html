@@ -1,9 +1,9 @@
 <div *ngIf="product" class="container">
-    <div class="row">
+    <div class="row mt-3">
         <div class="col">
             <h5 class="row">{{product.name}}</h5>
             
-            <carousel>
+            <carousel class="row">
                 <slide *ngFor="let image of product.images">
                     <img src="{{image}}" alt="{{product.name}}" style="display: block; width: 100%;">
                 </slide>
@@ -15,15 +15,13 @@
         </div>
         
         <div class="col">
-            <p>{{product.description}}</p>
             <div class="card">
-                
                 <div class="card-body">
-                    <p>{{product.price}}</p>
-                </div>
-
-                <div class="card-body text-right">
-                    <button class="btn btn-primary">Buy</button>
+                    <p class="card-text">{{product.description}}</p>
+                    <div class="text-right">
+                        <h6>{{product.price | number:'1.2-2'}} €</h6>
+                        <button class="btn btn-primary" (click)="addItemToBasket(product)">Add To Basket</button>
+                    </div>
                 </div>
             </div>
         </div>

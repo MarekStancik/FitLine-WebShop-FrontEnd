@@ -2,28 +2,28 @@
     <form [formGroup]="formUserDetails" (ngSubmit)="updateUser()">
         <fieldset>
             <div class="form-field">
-                <label class="row">Email:</label>
-                <input class="row mb-1" name="email" formControlName="email">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" formControlName="email">
             </div>
 
             <div class="form-field">
-                <label class="row">First Name:</label>
-                <input class="row mb-1" name="firstName" formControlName="firstName">
+                <label for="fname">First Name:</label>
+                <input type="text" id="fname" name="firstName" formControlName="firstName">
             </div>
 
             <div class="form-field">
-                <label class="row">Last Name:</label>
-                <input class="row mb-1" name="lastName" formControlName="lastName">
+                <label for="lname">Last Name:</label>
+                <input type="text" id="lname" name="lastName" formControlName="lastName">
             </div>
 
             <div class="form-field">
-                <label class="row">Phone:</label>
-                <input class="row mb-1" name="phone" type="tel" formControlName="phone">
+                <label for="phone">Phone:</label>
+                <input type="tel" id="phone" name="phone" formControlName="phone">
             </div>
 
             <div class="form-field">
-                <label class="row">Organization:</label>
-                <input class="row mb-1" name="organization" formControlName="organization">
+                <label for="org">Organization:</label>
+                <input type="text" id="org" name="organization" formControlName="organization">
             </div>
         </fieldset>
 
@@ -31,14 +31,14 @@
             {{errorMessage}}
         </alert>
 
-        <alert *ngIf="updated" type="success" [dismissible]="true" (onClosed)="onCloseSuccessAlert()">
-            User information updated
-        </alert>
-
-        <button type="submit" class="btn btn-primary" [class.disabled]="updating" >Update</button>
+        <input type="submit" value="Update "class="btn btn-primary" [class.disabled]="updating">
         <div *ngIf="updating" class="spinner-border text-primary" role="status">
             <span class="sr-only">Loading...</span>
         </div>
+
+        <alert *ngIf="updated" type="success" [dismissible]="true" (onClosed)="onCloseSuccessAlert()">
+            User information updated
+        </alert>
     </form>
 </div>
 

@@ -1,6 +1,30 @@
 
 <div class="container">
-    <div class="row mt-5">
+
+    <!--BreadCrumb component on top-->
+    <div *ngIf="currentCategory !== null" class="row mt-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li *ngFor="let category of getCategoryTree(); last as isLast" 
+                    class="breadcrumb-item" 
+                    [ngClass]="{'active': isLast}">
+                    <a *ngIf="!isLast; else lastCat" [routerLink]="['/products',category | lowercase]">{{category}}</a> 
+                    <ng-template #lastCat>{{category}}</ng-template>
+                </li>
+            </ol>
+        </nav>
+    </div>
+
+    <!--List of children categories of the category-->
+    <div *ngIf="currentCategory && currentCategory.children && currentCategory.children.length > 0" class="row mb-3">
+        <div *ngFor="let category of currentCategory.children" class="col-xs category-tab mr-1 mb-1">
+            <a [routerLink]="['/products',category.name | lowercase]">{{category.name}}</a>
+        </div>
+    </div>
+
+
+
+    <div class="row">
 
         <!--Filter Pane on the left-->
         <div class="col-xs filter-pane">

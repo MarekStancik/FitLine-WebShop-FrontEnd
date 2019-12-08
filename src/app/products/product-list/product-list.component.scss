@@ -13,13 +13,17 @@
     background-color: rgba(0,0,0,.125);
 }
 
+.order-by-tab.active{
+    color: #0059ff;
+}
+
 .order-by-tab:hover{
-    background-color: #5bc0de;
+    background-color: #dbdbdb;
     cursor: pointer;
 }
 
 .order-by-tab-horizontal.active{
-    border-top: 6px solid #0275d8; 
+    border-top: 4px solid #007bff; 
     background-color: white;
 }
 
@@ -32,15 +36,11 @@
 }
 
 .order-by-tab-vertical.active{
-    border-left: 6px solid #0275d8; 
+    border-left: 4px solid #007bff; 
     border-right: 0px;
     background-color: white;
     margin-left: 2%;
     margin-right: -15%;
-}
-
-.price-input{
- //width: 80%;
 }
 
 .filter-pane{
@@ -63,4 +63,12 @@
     position:absolute;
     bottom:0;
     width: 100%;
+}
+
+.category-tab{
+    border: 1px solid rgba(0,0,0,.125);
+    display: block;
+    position: relative;
+    padding: .75rem 1.25rem;
+    border-radius: 15px;
 }

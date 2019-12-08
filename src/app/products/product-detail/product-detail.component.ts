@@ -3,6 +3,7 @@ import { ProductModel } from '../product.model';
 import { switchMap } from 'rxjs/operators';
 import { ParamMap, Router, ActivatedRoute } from '@angular/router';
 import { ProductService } from '../shared/product.service';
+import { BasketService } from 'src/app/basket/basket.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -12,14 +13,20 @@ import { ProductService } from '../shared/product.service';
 export class ProductDetailComponent implements OnInit {
   product: ProductModel;
 
-  constructor(private productService: ProductService,private route: ActivatedRoute) { }
+  constructor(
+    private _productService: ProductService,
+    private _route: ActivatedRoute,
+    private _basketService: BasketService) { }
 
   ngOnInit() {
-    this.route.paramMap.pipe(
+    this._route.paramMap.pipe(
       switchMap((params: ParamMap) =>
-        this.productService.getById(Number.parseInt(params.get('id'))))
+        this._productService.getById(Number.parseInt(params.get('id'))))
     )
     .subscribe(product => this.product = product);
   }
 
+  addItemToBasket(product: ProductModel){
+    this._basketService.addItem(product,1);
+  }
 }

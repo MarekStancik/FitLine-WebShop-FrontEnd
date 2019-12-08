@@ -1,9 +1,18 @@
 <div class="container">
-    <div class="row">
-        <app-user-profile-menu [user]="user" class="col"></app-user-profile-menu>
-        <app-user-details [user]="user" class="col" *ngIf="section === 'details' || !section"></app-user-details>
-        <app-user-billing-address [user]="user" class="col" *ngIf="section === 'address'"></app-user-billing-address>
-        <app-user-news-subs [user]="user" class="col" *ngIf="section === 'subs'"></app-user-news-subs>
-        <app-user-discounts [user]="user" class="col" *ngIf="section === 'cards'"></app-user-discounts>
+    
+    <div class="row-xl mt-3">
+        <alert *ngIf="user.address == null" type="warning" [routerLink]="['/user-profile','address']" class="clickable-text">
+            Please <strong>UPDATE</strong> your billing address !
+        </alert>
+    </div>
+
+    <div class="row mt-1 mb-3">
+        <app-user-profile-menu [user]="user" class="col-4"></app-user-profile-menu>
+        <div class="col-8">
+            <app-user-details [user]="user" *ngIf="section === 'details' || !section"></app-user-details>
+            <app-user-billing-address [user]="user" *ngIf="section === 'address'"></app-user-billing-address>
+            <app-user-news-subs [user]="user" *ngIf="section === 'subs'"></app-user-news-subs>
+            <app-user-discounts [user]="user" *ngIf="section === 'cards'"></app-user-discounts>
+        </div>
     </div>
 </div>

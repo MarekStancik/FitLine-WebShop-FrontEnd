@@ -1,6 +1,7 @@
+import { ProductCategory } from './product-category';
+
 export class ProductModel {
     id: number;
-    category: string;
     name: string;
     price: number;
     description: string;
@@ -8,4 +9,5 @@ export class ProductModel {
     images: string[];
     rating: number;
     soldCount?: number;
+    category: ProductCategory;
 }

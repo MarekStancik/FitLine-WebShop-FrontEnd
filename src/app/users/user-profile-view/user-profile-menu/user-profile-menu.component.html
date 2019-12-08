@@ -1,18 +1,18 @@
-<div class="card" style="width: 18rem;">
+<div class="card">
     <img src="{{user.imageUrl}}" class="card-img-top" alt="user image">
     <div class="card-body">
         <h5 class="card-title text-center">{{user.firstName}} {{user.lastName}}</h5>
-        <p class="card-text">he will stare you down in a gym</p>
+        <p class="card-text text-center">he will stare you down in a gym</p>
     </div>
     <ul class="list-group list-group-flush">
         <li *ngFor="let section of sections" 
-            class="list-group-item dropdown-item" 
+            class="list-group-item" 
             [routerLink]="['/user-profile',section.link]" 
-            routerLinkActive="active" 
+            routerLinkActive="selected" 
             style="cursor: pointer;"
             >
             {{section.name}}
         </li>
-        <li class="btn btn-danger mt-1">Delete Profile</li>
+        <li class="list-group-item btn btn-outline-danger">Delete Profile</li>
     </ul>
 </div>
