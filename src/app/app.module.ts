@@ -33,6 +33,9 @@ import { QuillModule } from 'ngx-quill';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CategoryBreadcrumbComponent } from './shared/category-breadcrumb/category-breadcrumb.component';
+import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
+import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
+import { AdminNavbarComponent } from './admin/admin-navbar/admin-navbar.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +60,10 @@ import { CategoryBreadcrumbComponent } from './shared/category-breadcrumb/catego
     BasketViewComponent,
     PaymentViewComponent,
     UserProfileViewComponent,
-    CategoryBreadcrumbComponent
+    CategoryBreadcrumbComponent,
+    AdminLoginComponent,
+    AdminHomeComponent,
+    AdminNavbarComponent
   ],
   imports: [
     BrowserModule,
