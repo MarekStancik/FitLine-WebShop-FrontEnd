@@ -4,8 +4,12 @@
     <!--The main element on the left of navbar which redirects to main page-->
     <a class="navbar-brand" routerLink="/">FIT line</a>
 
+    <button class="navbar-toggler collapsed" type="button" (click)="isCollapsed = !isCollapsed" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
     <!--Navbar Items-->
-    <div class="collapse navbar-collapse">
+    <div class="collapse navbar-collapse" [collapse]="isCollapsed">
         <ul class="navbar-nav mr-auto">
             <!--Main Sections
             MainSections are generated via ngFor 
@@ -16,16 +20,16 @@
                 </a>
             </li>
         </ul>
-
+        <!--User sections-->
+        <app-user-menu></app-user-menu>
 
         <!--Basket-->
         <app-basket-dropdown></app-basket-dropdown>
-
-        <!--User sections-->
-        <app-user-menu></app-user-menu>
 
         <!--Search sections-->
         <app-products-search-bar></app-products-search-bar>
     </div>
 
 </nav>
+
+

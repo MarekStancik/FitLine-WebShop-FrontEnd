@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ButtonsModule, ProgressbarModule, PaginationModule } from 'ngx-bootstrap';
+import { ButtonsModule, ProgressbarModule, PaginationModule, CollapseModule } from 'ngx-bootstrap';
 import { NavBarComponent } from './shared/nav-bar/nav-bar.component';
 import { ProductsNameFilterPipe } from './products/shared/products-name-filter.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -29,6 +29,10 @@ import { BasketDropdownComponent } from './basket/basket-dropdown/basket-dropdow
 import { BasketViewComponent } from './basket/basket-view/basket-view.component';
 import { PaymentViewComponent } from './payment/payment-view/payment-view.component';
 import { UserProfileViewComponent } from './users/user-profile-view/user-profile-view.component';
+import { QuillModule } from 'ngx-quill'; 
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CategoryBreadcrumbComponent } from './shared/category-breadcrumb/category-breadcrumb.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +56,8 @@ import { UserProfileViewComponent } from './users/user-profile-view/user-profile
     BasketDropdownComponent,
     BasketViewComponent,
     PaymentViewComponent,
-    UserProfileViewComponent
+    UserProfileViewComponent,
+    CategoryBreadcrumbComponent
   ],
   imports: [
     BrowserModule,
@@ -60,12 +65,17 @@ import { UserProfileViewComponent } from './users/user-profile-view/user-profile
     ButtonsModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
     CarouselModule.forRoot(),
     ModalModule.forRoot(),
     AlertModule.forRoot(),
     ProgressbarModule.forRoot(),
-    PaginationModule.forRoot()
+    PaginationModule.forRoot(),
+    QuillModule.forRoot(),
+    CollapseModule.forRoot(),
+    BsDropdownModule.forRoot()
   ],
   entryComponents:[
     LoginViewComponent

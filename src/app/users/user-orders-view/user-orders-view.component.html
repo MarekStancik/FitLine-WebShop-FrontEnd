@@ -1,1 +1,20 @@
-<p>user-orders-view works!</p>
+<div class="container">
+    <div class="row">
+        <div *ngIf="orders === null; else ordersLoaded">
+            Loading Orders
+        </div>
+
+        <ng-template #ordersLoaded>
+            <div *ngIf="orders.length < 1; else hasOrders">
+                You have no orders on this account
+            </div>
+            <ng-template #hasOrders>
+                <ul>
+                    <li *ngFor="let order of orders">
+                        {{order.id}}
+                    </li>
+                </ul>
+            </ng-template>
+        </ng-template>
+    </div>
+</div>

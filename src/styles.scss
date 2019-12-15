@@ -1,3 +1,5 @@
+@import '../node_modules/quill/dist/quill.core.css';
+@import '../node_modules/quill/dist/quill.snow.css';
 /* You can add global styles to this file, and also import other style files */
 .checkbox-label {
     display: block;
@@ -33,7 +35,7 @@
 }
 
 /* Style inputs */
-input[type=text],input[type=email],input[type=tel],input[type=password], select {
+input[type=text],input[type=email],input[type=tel],input[type=password],input[type=number], select {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;

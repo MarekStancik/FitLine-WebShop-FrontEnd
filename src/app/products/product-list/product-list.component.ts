@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductModel } from '../product.model';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ProductService } from '../shared/product.service';
 import { switchMap, filter } from 'rxjs/operators';
 import { BasketService } from 'src/app/basket/basket.service';
 import { ProductCategory } from '../product-category';
+import { ProductDto } from '../product-dto';
+import { SupplierDto } from 'src/app/suppliers/supplier-dto';
+import { CategoryService } from 'src/app/shared/category.service';
+import { of } from 'rxjs';
 
 enum OrderBy
 {
@@ -31,13 +34,13 @@ export class ProductListComponent implements OnInit {
   private _priceTo: number;
 
   //All products
-  products: ProductModel[];
+  products: ProductDto[];
 
   //Products that are filtered based on filters and are shown on the page
-  filteredProducts: ProductModel[];
+  filteredProducts: ProductDto[];
 
   //Map that holds names of the brands and whether they should be filtered or nah
-  brandFilter: Map<string,boolean>;
+  brandFilter: Map<SupplierDto,boolean>;
 
   //Maximum allowed rating of product
   maxRating = 5;
@@ -51,35 +54,85 @@ export class ProductListComponent implements OnInit {
 
   constructor(
     private _route: ActivatedRoute,
+    private _categoryService: CategoryService,
     private _productService: ProductService,
     private _basketService: BasketService) { }
 
   ngOnInit() {
-    this._priceFrom = 0;
-    this._priceTo = 0;
-    this._ordering = OrderBy.Rating;
+    this.refreshValues();
 
     this._route.paramMap
       .pipe(
+        //Switch map to obtain category from query parameters
         switchMap((params: ParamMap) =>{
-          this.currentCategory = this._productService.getCategoryByName(params.get('category'));
-           return this.currentCategory !== null 
-            ? this._productService.getAllInCategory(this.currentCategory) 
-            : this._productService.getAll()
+            this.refreshValues();
+            //try to get category
+            const category = params.get('category');
+            
+            //If there was an category obtain products in the category
+            if(category)
+            {
+              this._categoryService.getByName(category)
+                .subscribe(cat => {
+                  if(cat){
+                  this.currentCategory = cat;
+                  this._productService.getAllInCategory(this.currentCategory)
+                    .subscribe(products =>{ 
+                      if(products !== null)
+                        this.initializeProducts(products);
+                    });
+                  }
+                })
+            }
+            else //Else just get all products
+            {
+              this.currentCategory = null;
+              this._categoryService.getAll()
+                .subscribe(cats =>{
+                  this.currentCategory = {
+                    name: 'All Products',
+                    id: 0,
+                    parentCategory: null,
+                    children: cats
+                   };
+                });
+              return this._productService.getAll();
+            }
+            
+            //return null here so subcribe callback will know
+            //there is no products yet in case of getting category producst
+            return of(null);
         })
       )
       .subscribe(products =>{ 
-        this.brandFilter = new Map<string,boolean>();
-        this.products = products;
-        this.products.forEach(element => {
-          if(element.supplier){
-            this.brandFilter.set(element.supplier,false);
-          }
-        });
-        this._priceFrom = Math.min(...products.map(o => o.price));
-        this._priceTo = Math.max(...products.map(o => o.price),0);
-        this.filterProducts();
+        if(products !== null)
+          this.initializeProducts(products);
       });
+  }
+
+  private refreshValues()
+  {
+    this._priceFrom = 0;
+    this._priceTo = 0;
+    this._ordering = OrderBy.Rating;
+    this.currentCategory = null;
+    this.currentPage = 1;
+    this.filteredProducts = null;
+    this.products = null;
+    this.brandFilter = null;
+  }
+
+  private initializeProducts(products: any){
+    this.brandFilter = new Map<SupplierDto,boolean>();
+    this.products = products;
+    this.products.forEach(element => {
+      if(element.supplier){
+        this.brandFilter.set(element.supplier,false);
+      }
+    });
+    this._priceFrom = Math.min(...products.map(o => o.price));
+    this._priceTo = Math.max(...products.map(o => o.price),0);
+    this.filterProducts();
   }
 
   set ordering(order: OrderBy){
@@ -113,10 +166,15 @@ export class ProductListComponent implements OnInit {
     return Object.values(OrderBy);
   }
 
-  toggleBrandFilter(brand: string){
-    this.brandFilter.set(brand,!this.brandFilter.get(brand));
+  toggleBrandFilter(supplier: SupplierDto){
+    for (let it of this.brandFilter.keys()) {
+      if(it.id == supplier.id){
+        this.brandFilter.set(supplier,!this.brandFilter.get(supplier));
     
-    this.filterProducts();
+        this.filterProducts();
+        return;
+      }
+    }
   }
 
   filterProducts(){
@@ -147,11 +205,11 @@ export class ProductListComponent implements OnInit {
     return false;
   }
 
-  isFilteredSupplier(supplier: string): boolean{
+  isFilteredSupplier(supplier: SupplierDto): boolean{
     return this.brandFilter.get(supplier);
   }
 
-  orderProducts(products: ProductModel[],order: OrderBy)
+  orderProducts(products: ProductDto[],order: OrderBy)
   {
     switch (this.ordering) {
       case OrderBy.PriceAsc:
@@ -164,7 +222,7 @@ export class ProductListComponent implements OnInit {
         products.sort((a1,a2) => a1.rating > a2.rating ? -1 : a1.rating === a2.rating ? 0 : 1);
         break;
       case OrderBy.Sales:
-        products.sort((a1,a2) => a1.soldCount > a2.soldCount ? -1 : a1.soldCount === a2.soldCount ? 0 : 1)
+      //  products.sort((a1,a2) => a1.soldCount > a2.soldCount ? -1 : a1.soldCount === a2.soldCount ? 0 : 1)
         break;
       default:
         break;
@@ -176,28 +234,11 @@ export class ProductListComponent implements OnInit {
     this.itemsPerPage = event.itemsPerPage;
   }
 
-  pagedFilteredProducts(): ProductModel[]{
+  pagedFilteredProducts(): ProductDto[]{
     return this.filteredProducts.slice((this.currentPage-1) * this.itemsPerPage,this.currentPage * this.itemsPerPage);
   }
 
-  addItemToBasket(product: ProductModel){
+  addItemToBasket(product: ProductDto){
     this._basketService.addItem(product,1);
-  }
-
-  getCategoryTree():Array<string>
-  {
-    if(this.currentCategory !== null)
-    {
-      let cats = new Set<string>([this.currentCategory.name]);
-      let cat = this.currentCategory;
-      while(cat.parentCategory)
-      {
-        cat = cat.parentCategory;
-        cats.add(cat.name);
-      }
-      return Array.from(cats).reverse();
-    }
-    else
-      return null;
   }
 }

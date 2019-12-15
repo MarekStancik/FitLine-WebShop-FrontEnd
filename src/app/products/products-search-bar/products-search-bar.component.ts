@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductModel } from '../product.model';
 import { ProductService } from '../shared/product.service';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { ProductDto } from '../product-dto';
 
 @Component({
   selector: 'app-products-search-bar',
@@ -10,7 +10,7 @@ import { of } from 'rxjs';
   styleUrls: ['./products-search-bar.component.scss']
 })
 export class ProductsSearchBarComponent implements OnInit {
-  allProducts: ProductModel[];
+  allProducts: ProductDto[];
 
   constructor(private productService: ProductService) { }
 

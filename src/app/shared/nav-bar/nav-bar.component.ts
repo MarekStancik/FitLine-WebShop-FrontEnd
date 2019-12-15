@@ -47,6 +47,8 @@ export class NavBarComponent implements OnInit {
 
   sections: Section[];
 
+  isCollapsed = false;
+
   constructor() { }
 
   ngOnInit() 

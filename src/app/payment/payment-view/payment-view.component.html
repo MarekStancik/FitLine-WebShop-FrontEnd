@@ -1,1 +1,18 @@
-<p>payment-view works!</p>
+<div class="container">
+    <div class="row">
+        <!--There is no user logged in so offer to login/register/create temporary info-->
+        <div *ngIf="!user; else hasUser">
+            <h6>You have to login to proceed in payment</h6>
+        </div>
+
+        <ng-template #hasUser>
+            <div *ngIf="!user.address; else hasAddress">
+                Please <strong>UPDATE</strong> your address before proceeding with payment
+            </div>
+
+            <ng-template #hasAddress>
+                <input class="btn btn-primary" value="Pay">
+            </ng-template>
+        </ng-template>
+    </div>
+</div>

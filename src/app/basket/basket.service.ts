@@ -1,24 +1,33 @@
 import { Injectable } from '@angular/core';
-import { ProductModel } from '../products/product.model';
+import { ProductDto } from '../products/product-dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BasketService {
 
-  private items: Map<ProductModel,number>;
+  private items: Map<ProductDto,number>;
 
   private totalAmount = 0;
 
   constructor() { 
-    this.items = new Map<ProductModel,number>();
+    this.items = new Map<ProductDto,number>();
   }
 
-  addItem(product: ProductModel,count: number)
+  addItem(product: ProductDto,count: number)
   {
-    if(this.items.has(product))
+    let oldProduct = null;
+    for (let [key] of this.items) {
+      if(key.id === product.id)
+      {
+        oldProduct = key;
+        break;
+      }
+    }
+
+    if(oldProduct)
     {
-      this.items.set(product,this.items.get(product).valueOf() + count);
+      this.items.set(oldProduct,this.items.get(oldProduct).valueOf() + count);
     }
     else
     {
@@ -26,9 +35,9 @@ export class BasketService {
     }
 
     this.totalAmount += product.price * count;
-  }
+  } 
 
-  deleteItem(product: ProductModel,count: number)
+  deleteItem(product: ProductDto,count: number)
   {
     const item = this.items.get(product);
     const difference = item.valueOf() - count;
@@ -44,7 +53,7 @@ export class BasketService {
     }
   }
 
-  getItems(): Map<ProductModel,number>{
+  getItems(): Map<ProductDto,number>{
     return this.items;  
   }
 

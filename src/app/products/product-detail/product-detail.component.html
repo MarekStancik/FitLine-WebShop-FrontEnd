@@ -1,7 +1,11 @@
 <div *ngIf="product" class="container">
-    <div class="row mt-3">
-        <div class="col">
-            <h5 class="row">{{product.name}}</h5>
+
+    <div *ngIf="product && product.category" class="row">
+        <app-category-breadcrumb [category]="product.category" [activeLast]="true"></app-category-breadcrumb>
+    </div>
+
+    <div class="row">
+        <div class="col-lg">
             
             <carousel class="row">
                 <slide *ngFor="let image of product.images">
@@ -9,16 +13,25 @@
                 </slide>
 
                 <slide *ngIf="!product.images">
-                    <img src="https://increasify.com.au/wp-content/uploads/2016/08/default-image.png" alt="{{product.name}}">
+                    <img src="../../../assets/no_image.png" alt="{{product.name}}">
                 </slide>
             </carousel>
         </div>
         
-        <div class="col">
-            <div class="card">
-                <div class="card-body">
+        <div class="col-lg">
+            <div class="card" style="height: 100%;">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{product.name}}</h5>
                     <p class="card-text">{{product.description}}</p>
-                    <div class="text-right">
+                    
+                    <div class="card-text" *ngFor="let optional of product.optionals">
+                        <label for="optional.name">{{optional.name}}</label>
+                        <select id="optional.name">
+                            <option *ngFor="let option of optional.options">{{option}}</option>
+                        </select>
+                    </div>
+                    
+                    <div class="align-self-end text-right" style="margin-top: auto;">
                         <h6>{{product.price | number:'1.2-2'}} €</h6>
                         <button class="btn btn-primary" (click)="addItemToBasket(product)">Add To Basket</button>
                     </div>
@@ -26,6 +39,14 @@
             </div>
         </div>
         
+    </div>
+<!--
+    <div class="row">
+            <quill-editor></quill-editor>
+        </div>-->
+
+    <div *ngIf="product.document" class="row">
+        <quill-view [content]="product.document" format="text" theme="snow"></quill-view>
     </div>
 </div>
 

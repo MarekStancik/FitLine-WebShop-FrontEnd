@@ -4,6 +4,9 @@ import { ProductModel } from '../product.model';
 import { ProductsCategoryFilterPipe } from 'src/app/products/shared/products-category-filter.pipe';
 import { take, filter } from 'rxjs/operators';
 import { ProductCategory } from '../product-category';
+import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { ProductDto } from '../product-dto';
 
   namespace Categories{
     export const supplements: ProductCategory = {
@@ -98,7 +101,7 @@ export class ProductService {
 
 
   allProducts: ProductModel[] = [
-    {
+  /*  {
       id: 1,
       name: 'Isolate whey protein',
       category: Categories.wheyProtein,
@@ -107,7 +110,18 @@ export class ProductService {
       price: 20.99,
       supplier: 'Scitec',
       rating: 5,
-      soldCount: 25
+      soldCount: 25,
+      document: '<div><strong>test</strong></div><ul><li>1</li><li class="ql-indent-1">1-1</li><li>2</li><ol><li>numbered</li><li class="ql-indent-1">numbered-1</li></ol></ul><div><br></div>',
+      optionals: [{
+        id: 1,
+        name: 'Size',
+        options: ['500g','1000g','2000g']
+      },
+      {
+        id: 2,
+        name: 'Flavour',
+        options: ['Chocolate','Mint','Vanilla'] 
+      }]
     },
     {
       id: 2,
@@ -140,7 +154,7 @@ export class ProductService {
       supplier: 'Weider',
       rating: 4.4,
       soldCount: 1
-    },
+    },*/
   ];
 
   private initializeCategories(){
@@ -150,9 +164,12 @@ export class ProductService {
     });
   }
 
-  constructor() { 
+  private productsUrl: string;
 
-    this.initializeCategories();
+  constructor(private _http: HttpClient) { 
+
+    this.productsUrl = environment.apiUrl + "/products";
+ /*   this.initializeCategories();
 
     for (let index = 5; index < 100; index++) {
       const item = {
@@ -168,16 +185,17 @@ export class ProductService {
       }
 
       this.allProducts.push(item);
-    }
+    }*/
   }
 
-  getAll(): Observable<ProductModel[]>{
-    return of(this.allProducts);
+  getAll(): Observable<ProductDto[]>{
+    return this._http.get<ProductDto[]>(this.productsUrl);
+    //return of(this.allProducts);
   }
 
-  private getAllInCategoryNotObservable(category: ProductCategory): ProductModel[]
+ /* private getAllInCategoryNotObservable(category: ProductCategory): ProductDto[]
   {
-    var myval: ProductModel[] = [];
+    var myval: ProductDto[] = [];
     
     //Iterate all products to search for category
     this.allProducts.forEach(element => {
@@ -196,10 +214,11 @@ export class ProductService {
     }
 
     return myval;
-  }
+  }*/
 
-  getAllInCategory(category: ProductCategory): Observable<ProductModel[]>{
-    return of(this.getAllInCategoryNotObservable(category));
+  getAllInCategory(category: ProductCategory): Observable<ProductDto[]>{
+    return this._http.get<ProductDto[]>(this.productsUrl + "?category=" + category.name);
+    //return of(this.getAllInCategoryNotObservable(category));
   }
 
   /*getCategoryById(id: number): ProductCategory{
@@ -211,6 +230,7 @@ export class ProductService {
     return null;
   }*/
 
+  /*
   getCategoryByName(name: string): ProductCategory{
     
     //Return null in case of empty name
@@ -223,14 +243,15 @@ export class ProductService {
         return item;
     }
     return null;
-  }
+  }*/
 
   getById(id: number): Observable<ProductModel>{
-    for (let index = 0; index < this.allProducts.length; index++) {
+    return this._http.get<ProductModel>(this.productsUrl + '/' + id);
+    /*for (let index = 0; index < this.allProducts.length; index++) {
       const element = this.allProducts[index];
       if(element.id === id)
         return of(element);
     }
-    return null;
+    return null;*/
   }
 }
