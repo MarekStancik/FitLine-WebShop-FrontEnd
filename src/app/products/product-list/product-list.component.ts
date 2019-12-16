@@ -8,15 +8,8 @@ import { ProductDto } from '../product-dto';
 import { SupplierDto } from 'src/app/suppliers/supplier-dto';
 import { CategoryService } from 'src/app/shared/category.service';
 import { of } from 'rxjs';
-import { ProductsFilter } from '../shared/products-filter';
+import { ProductsFilter, ProductOrdering } from '../shared/products-filter';
 
-enum OrderBy
-{
-  Sales = "Most Sold",
-  Rating = "Top Rated",
-  PriceDesc = "Most Expensive",
-  PriceAsc = "Least Expensive",
-}
 
 @Component({
   selector: 'app-product-list',
@@ -26,7 +19,7 @@ enum OrderBy
 export class ProductListComponent implements OnInit {
 
   //Flag that signals the way of ordering products
-  private _ordering: OrderBy;
+  private _ordering: ProductOrdering;
 
   //Price to filter from
   private _priceFrom: number;
@@ -38,7 +31,7 @@ export class ProductListComponent implements OnInit {
   products: ProductDto[];
 
   //Products that are filtered based on filters and are shown on the page
-  filteredProducts: ProductDto[];
+  //filteredProducts: ProductDto[];
 
   //Map that holds names of the brands and whether they should be filtered or nah
   brandFilter: Map<SupplierDto,boolean>;
@@ -68,59 +61,15 @@ export class ProductListComponent implements OnInit {
         this.currentCategory = cat;
         this.loadProducts();
       });
-
-    /*this._route.paramMap
-      .pipe(
-        //Switch map to obtain category from query parameters
-        switchMap((params: ParamMap) =>{
-            this.refreshValues();
-            //try to get category
-            const category = params.get('category');
-            
-            //If there was an category obtain products in the category
-            if(category)
-            {
-              this._categoryService.getByName(category)
-                .subscribe(cat => {
-                  if(cat)
-                    this.currentCategory = cat;
-                  this.loadProducts();
-                })
-            }
-            else //Else just get all products
-            {
-              this.currentCategory = null;
-              this._categoryService.getAll()
-                .subscribe(cats =>{
-                  this.currentCategory = {
-                    name: 'All Products',
-                    id: 0,
-                    parentCategory: null,
-                    children: cats
-                   };
-                });
-              return this._productService.getAll(this.getCurrentFilter());
-            }
-            
-            //return null here so subcribe callback will know
-            //there is no products yet in case of getting category producst
-            return of(null);
-        })
-      )
-      .subscribe(products =>{ 
-        if(products !== null)
-          this.initializeProducts(products);
-      });*/
   }
 
   private refreshValues()
   {
     this._priceFrom = 0;
     this._priceTo = 0;
-    this._ordering = OrderBy.Rating;
+    this._ordering = ProductOrdering.Rating;
     this.currentCategory = null;
     this.currentPage = 1;
-    this.filteredProducts = null;
     this.products = null;
     this.brandFilter = null;
   }
@@ -139,11 +88,12 @@ export class ProductListComponent implements OnInit {
     let val: ProductsFilter = {
       categoryId: 0,
       currentPage: this.currentPage,
-      maxPrice: this.priceFrom,
-      minPrice: this.priceTo,
+      maxPrice: this.priceTo,
+      minPrice: this.priceFrom,
       pageSize: this.itemsPerPage,
       searchTextName: "",
-      suppliers: null
+      suppliers: [],
+      ordering: this.ordering
     };
 
     if(this.currentCategory !== null)
@@ -151,7 +101,23 @@ export class ProductListComponent implements OnInit {
       val.categoryId = this.currentCategory.id;
     }
 
+    if(this.brandFilter && this.brandFilter.size > 0){
+      this.brandFilter.forEach((value: boolean, key: SupplierDto) => {
+        if(value)
+          val.suppliers.push(key.id);
+      });
+    }
+
     return val;
+  }
+
+  private filterProducts()
+  {
+    this._productService.getAll(this.getCurrentFilter())
+      .subscribe(products =>{ 
+        if(products !== null)
+        this.products = products;
+      });
   }
 
   private initializeProducts(products: any){
@@ -164,15 +130,14 @@ export class ProductListComponent implements OnInit {
     });
     this._priceFrom = Math.min(...products.map(o => o.price));
     this._priceTo = Math.max(...products.map(o => o.price),0);
+  }
+
+  set ordering(order: ProductOrdering){
+    this._ordering = order;
     this.filterProducts();
   }
 
-  set ordering(order: OrderBy){
-    this._ordering = order;
-    this.orderProducts(this.filteredProducts,order);
-  }
-
-  get ordering(): OrderBy{
+  get ordering(): ProductOrdering{
     return this._ordering;
   }
 
@@ -195,7 +160,7 @@ export class ProductListComponent implements OnInit {
   }
 
   orderValues(): Array<string>{
-    return Object.values(OrderBy);
+    return Object.values(ProductOrdering);
   }
 
   toggleBrandFilter(supplier: SupplierDto){
@@ -209,7 +174,8 @@ export class ProductListComponent implements OnInit {
     }
   }
 
-  filterProducts(){
+  
+  /*filterProducts(){
     this.filteredProducts = [];
 
     const isFilteringSuppliers = this.isFilteringSuppliers();
@@ -227,7 +193,7 @@ export class ProductListComponent implements OnInit {
     });
 
     this.orderProducts(this.filteredProducts,this.ordering);
-  }
+  }*/
 
   isFilteringSuppliers(): boolean{
     for (let value of this.brandFilter.values()) {
@@ -241,33 +207,10 @@ export class ProductListComponent implements OnInit {
     return this.brandFilter.get(supplier);
   }
 
-  orderProducts(products: ProductDto[],order: OrderBy)
-  {
-    switch (this.ordering) {
-      case OrderBy.PriceAsc:
-        products.sort((a1,a2) => a1.price > a2.price ? 1 : a1.price === a2.price ? 0 : -1);
-        break;
-      case OrderBy.PriceDesc:
-        products.sort((a1,a2) => a1.price > a2.price ? -1 : a1.price === a2.price ? 0 : 1);
-        break;
-      case OrderBy.Rating:
-        products.sort((a1,a2) => a1.rating > a2.rating ? -1 : a1.rating === a2.rating ? 0 : 1);
-        break;
-      case OrderBy.Sales:
-      //  products.sort((a1,a2) => a1.soldCount > a2.soldCount ? -1 : a1.soldCount === a2.soldCount ? 0 : 1)
-        break;
-      default:
-        break;
-    }
-  }
-
   pageChanged(event: any){
     this.currentPage = event.page;
     this.itemsPerPage = event.itemsPerPage;
-  }
-
-  pagedFilteredProducts(): ProductDto[]{
-    return this.filteredProducts.slice((this.currentPage-1) * this.itemsPerPage,this.currentPage * this.itemsPerPage);
+    this.filterProducts();
   }
 
   addItemToBasket(product: ProductDto){

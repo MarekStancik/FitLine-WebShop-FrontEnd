@@ -32,7 +32,14 @@ export class ProductService {
     if(filter === null)
       return this._http.get<ProductDto[]>(this.productsUrl);
     else
-      return this._http.get<ProductDto[]>(`${this.productsUrl}?categoryId=${filter.categoryId}&pageSize=${filter.pageSize}&currentPage=${filter.currentPage}&minPrice=${filter.minPrice}&maxPrice=${filter.maxPrice}`);
+    {
+      let url = `${this.productsUrl}?categoryId=${filter.categoryId}&pageSize=${filter.pageSize}&currentPage=${filter.currentPage}&minPrice=${filter.minPrice}&maxPrice=${filter.maxPrice}`;
+      if(filter.suppliers)
+      {
+        filter.suppliers.forEach(sup => url = url + "&suppliers=" + sup);
+      }
+      return this._http.get<ProductDto[]>(url);
+    }
   }
 
   getById(id: number): Observable<ProductModel>{

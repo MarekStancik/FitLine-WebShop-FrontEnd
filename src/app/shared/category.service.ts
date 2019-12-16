@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { ProductCategory } from '../products/product-category';
 import { environment } from 'src/environments/environment';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -21,22 +21,33 @@ export class CategoryService {
   private getDefaultCategory(): Observable<ProductCategory>{
     return this.getAll()
       .pipe(
+        catchError(err =>{
+          console.error(err);
+          
+          return of([]);
+        }),
         map(data => {
-        let rval: ProductCategory = {
-          children: null,
-          id: 0,
-          name: 'All Products',
-          parentCategory: null
-        };
+          let rval: ProductCategory = {
+            children: null,
+            id: 0,
+            name: 'All Products',
+            parentCategory: null
+          };
 
-        if(data)
-          rval.children = data;
-        return rval;
+          if(data)
+            rval.children = data;
+          return rval;
       }));
   }
 
   getByName(name: string): Observable<ProductCategory>{
-    return this._http.get<ProductCategory>(this.categoryUrl + '/' + name);
+    return this._http.get<ProductCategory>(this.categoryUrl + '/' + name)
+      .pipe(
+        catchError(err => {
+          console.error(err);
+          return this.getDefaultCategory()
+        })
+      );
   }
 
   getAll(): Observable<ProductCategory[]>{

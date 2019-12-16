@@ -44,8 +44,8 @@
             </div>
         
             <!--Product list-->
-            <div *ngIf="filteredProducts && filteredProducts.length > 0; else noProducts" class="row product-list">
-                <div *ngFor="let product of pagedFilteredProducts()" class="card col-md-4 pt-3 product-card">
+            <div *ngIf="products && products.length > 0; else noProducts" class="row product-list">
+                <div *ngFor="let product of products" class="card col-md-4 pt-3 product-card">
                     <img [src]="product.image ? product.image : '../../../assets/no_image.png'" class="card-img-top" alt="...">
                     <div class="card-body">
                         <progressbar [max]="maxRating" [value]="product.rating">
@@ -63,7 +63,7 @@
                 <!--Paging pane-->
                 <div class="col-xs-12 col-12 mt-2">
                     <pagination 
-                        [totalItems]="filteredProducts.length" 
+                        [totalItems]="products.length" 
                         [maxSize]="12"
                         [itemsPerPage]="itemsPerPage"
                         (pageChanged)="pageChanged($event)"></pagination>
