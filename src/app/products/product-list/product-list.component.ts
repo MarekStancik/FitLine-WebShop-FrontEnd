@@ -8,6 +8,7 @@ import { ProductDto } from '../product-dto';
 import { SupplierDto } from 'src/app/suppliers/supplier-dto';
 import { CategoryService } from 'src/app/shared/category.service';
 import { of } from 'rxjs';
+import { ProductsFilter } from '../shared/products-filter';
 
 enum OrderBy
 {
@@ -53,15 +54,22 @@ export class ProductListComponent implements OnInit {
   currentCategory: ProductCategory;
 
   constructor(
-    private _route: ActivatedRoute,
     private _categoryService: CategoryService,
     private _productService: ProductService,
-    private _basketService: BasketService) { }
+    private _basketService: BasketService,
+    private _route: ActivatedRoute) { }
 
   ngOnInit() {
     this.refreshValues();
 
-    this._route.paramMap
+    this._categoryService.getCurrentCategory(this._route)
+      .subscribe(cat => {
+        this.refreshValues();
+        this.currentCategory = cat;
+        this.loadProducts();
+      });
+
+    /*this._route.paramMap
       .pipe(
         //Switch map to obtain category from query parameters
         switchMap((params: ParamMap) =>{
@@ -74,14 +82,9 @@ export class ProductListComponent implements OnInit {
             {
               this._categoryService.getByName(category)
                 .subscribe(cat => {
-                  if(cat){
-                  this.currentCategory = cat;
-                  this._productService.getAllInCategory(this.currentCategory)
-                    .subscribe(products =>{ 
-                      if(products !== null)
-                        this.initializeProducts(products);
-                    });
-                  }
+                  if(cat)
+                    this.currentCategory = cat;
+                  this.loadProducts();
                 })
             }
             else //Else just get all products
@@ -96,7 +99,7 @@ export class ProductListComponent implements OnInit {
                     children: cats
                    };
                 });
-              return this._productService.getAll();
+              return this._productService.getAll(this.getCurrentFilter());
             }
             
             //return null here so subcribe callback will know
@@ -107,7 +110,7 @@ export class ProductListComponent implements OnInit {
       .subscribe(products =>{ 
         if(products !== null)
           this.initializeProducts(products);
-      });
+      });*/
   }
 
   private refreshValues()
@@ -120,6 +123,35 @@ export class ProductListComponent implements OnInit {
     this.filteredProducts = null;
     this.products = null;
     this.brandFilter = null;
+  }
+
+  private loadProducts()
+  {
+    this._productService.getAll(this.getCurrentFilter())
+      .subscribe(products =>{ 
+        if(products !== null)
+          this.initializeProducts(products);
+      });
+  }
+
+  private getCurrentFilter():ProductsFilter{
+    
+    let val: ProductsFilter = {
+      categoryId: 0,
+      currentPage: this.currentPage,
+      maxPrice: this.priceFrom,
+      minPrice: this.priceTo,
+      pageSize: this.itemsPerPage,
+      searchTextName: "",
+      suppliers: null
+    };
+
+    if(this.currentCategory !== null)
+    {
+      val.categoryId = this.currentCategory.id;
+    }
+
+    return val;
   }
 
   private initializeProducts(products: any){
