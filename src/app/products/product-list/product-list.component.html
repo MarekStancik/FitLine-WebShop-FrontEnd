@@ -39,7 +39,7 @@
                     class="order-by-tab order-by-tab-horizontal col-sm text-center"
                     [class.active]="ordering === value"
                     (click)="ordering = value">
-                    {{value}}
+                    {{value | productsOrderbyName}}
                 </div>
             </div>
         

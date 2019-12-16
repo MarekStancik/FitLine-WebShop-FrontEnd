@@ -33,11 +33,12 @@ export class ProductService {
       return this._http.get<ProductDto[]>(this.productsUrl);
     else
     {
-      let url = `${this.productsUrl}?categoryId=${filter.categoryId}&pageSize=${filter.pageSize}&currentPage=${filter.currentPage}&minPrice=${filter.minPrice}&maxPrice=${filter.maxPrice}`;
+      let url = `${this.productsUrl}?categoryId=${filter.categoryId}&pageSize=${filter.pageSize}&currentPage=${filter.currentPage}&minPrice=${filter.minPrice}&maxPrice=${filter.maxPrice}&ordering=${filter.ordering}`;
       if(filter.suppliers)
       {
         filter.suppliers.forEach(sup => url = url + "&suppliers=" + sup);
       }
+      console.log(url);
       return this._http.get<ProductDto[]>(url);
     }
   }

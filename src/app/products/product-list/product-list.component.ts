@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, PipeTransform } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ProductService } from '../shared/product.service';
 import { switchMap, filter } from 'rxjs/operators';
@@ -67,7 +67,7 @@ export class ProductListComponent implements OnInit {
   {
     this._priceFrom = 0;
     this._priceTo = 0;
-    this._ordering = ProductOrdering.Rating;
+    this._ordering = ProductOrdering.TopRated;
     this.currentCategory = null;
     this.currentPage = 1;
     this.products = null;
@@ -173,27 +173,6 @@ export class ProductListComponent implements OnInit {
       }
     }
   }
-
-  
-  /*filterProducts(){
-    this.filteredProducts = [];
-
-    const isFilteringSuppliers = this.isFilteringSuppliers();
-    this.products.forEach(element => {
-      let isOk = true;
-      
-      if(isFilteringSuppliers && !this.isFilteredSupplier(element.supplier))
-        isOk = false;
-
-      if(element.price > this.priceTo || element.price < this.priceFrom)
-        isOk = false;
-
-      if(isOk)
-        this.filteredProducts.push(element);
-    });
-
-    this.orderProducts(this.filteredProducts,this.ordering);
-  }*/
 
   isFilteringSuppliers(): boolean{
     for (let value of this.brandFilter.values()) {

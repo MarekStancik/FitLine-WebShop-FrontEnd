@@ -36,6 +36,7 @@ import { CategoryBreadcrumbComponent } from './shared/category-breadcrumb/catego
 import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
 import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { AdminNavbarComponent } from './admin/admin-navbar/admin-navbar.component';
+import { ProductsOrderbyNamePipe } from './products/shared/products-orderby-name.pipe';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { AdminNavbarComponent } from './admin/admin-navbar/admin-navbar.componen
     CategoryBreadcrumbComponent,
     AdminLoginComponent,
     AdminHomeComponent,
-    AdminNavbarComponent
+    AdminNavbarComponent,
+    ProductsOrderbyNamePipe
   ],
   imports: [
     BrowserModule,

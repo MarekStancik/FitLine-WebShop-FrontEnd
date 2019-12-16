@@ -1,9 +1,9 @@
 export enum ProductOrdering
 {
-  Sales = "Most Sold",
-  Rating = "Top Rated",
-  PriceDesc = "Most Expensive",
-  PriceAsc = "Least Expensive",
+  MostSold = "MostSold",
+  TopRated = "TopRated",
+  MostExpensive = "MostExpensive",
+  LeastExpensive = "LeastExpensive",
 }
 
 export interface ProductsFilter {
