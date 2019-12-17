@@ -1,1 +1,91 @@
-<p>admin-products works!</p>
+<app-admin-navbar></app-admin-navbar>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col">   
+                <ul class="list-group">
+                    <button class="list-group-item"(click)="prepareCreate()">Add new Product</button>
+                    <li *ngFor="let Product of Products" 
+                        (click)="onSelect(Product)" 
+                        class="list-group-item"
+                        [class.active]="Product === selectedProduct">
+                        <a>{{Product.name}} {{Product.description}}</a>
+                        <button style="margin-left: 20px"(click)="onDelete(Product)">Delete</button>
+                    </li>
+                </ul>
+        </div>
+
+        <div class="col">
+            <form *ngIf="isCreating || selectedProduct" [formGroup]="ProductForm" (ngSubmit)="save()">
+                <h3 *ngIf="isCreating">New Product</h3>
+                <h3 *ngIf="!isCreating">{{selectedProduct.name | uppercase}} {{selectedProduct.description}} </h3>
+                
+
+                <p>
+                    <label>
+                        Name:
+                        <input type="text" formControlName="name">
+                    </label>
+                </p>
+
+                <p>
+                    <label>
+                        Rating:
+                        <input type="text" formControlName="rating">
+                    </label>
+                </p>
+
+                <p>
+                    <label>
+                        Category:
+                        <input type="text" formControlName="category">
+                    </label>
+                </p>
+
+                <p>
+                    <label>
+                        Description:
+                        <input type="text" formControlName="description">
+                    </label>
+                </p>
+
+                <p>
+                    <label>
+                        Supplier:
+                        <input type="text" formControlName="supplier">
+                    </label>
+                </p>
+
+                <p>
+                    <label>
+                        Images:
+                        <input type="text" formControlName="images">
+                    </label>
+                </p>
+
+                <p>
+                    <label>
+                        Document:
+                        <input type="text" formControlName="document">
+                    </label>
+                </p>
+
+                <p>
+                    <label>
+                        Price:
+                        <input type="text" formControlName="price">
+                    </label>
+                </p>
+
+                <p>
+                    <label>
+                        Quantity:
+                        <input type="text" formControlName="quantity">
+                    </label>
+                </p>
+
+                <button type="submit">Save</button>
+
+            </form>
+        </div>
+    </div>
+</div>

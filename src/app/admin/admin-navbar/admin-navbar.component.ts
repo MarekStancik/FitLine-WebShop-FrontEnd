@@ -8,23 +8,23 @@ interface Section{
 const SECTIONS: Section[] = [
   {
     name: 'Products',
-    link: 'admin/products'
+    link: '/admin/products'
   },
   {
     name: 'Categories',
-    link: 'admin/categories'
+    link: '/admin/categories'
   },
   {
     name: 'Orders',
-    link: 'admin/orders'
+    link: '/admin/orders'
   },
   {
     name: 'Invoices',
-    link: 'admin/invoices'
+    link: '/admin/invoices'
   },
   {
     name: 'Shipments',
-    link: 'admin/shipments'
+    link: '/admin/shipments'
   }
 
 ]

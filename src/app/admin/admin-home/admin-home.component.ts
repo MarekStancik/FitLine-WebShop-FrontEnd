@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminHomeComponent implements OnInit {
 
+  isLoggedIn = true;
   constructor() { }
 
   ngOnInit() {

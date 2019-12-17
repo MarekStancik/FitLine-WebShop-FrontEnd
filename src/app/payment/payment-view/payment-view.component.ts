@@ -52,7 +52,7 @@ export class PaymentViewComponent implements OnInit {
     supplierId: 2, //supplier id should be enought anyway
     images: [ 'assets/mypepe.png','asstes/yourpepe.png'], //More images for carousel
     description: 'If you will eat this stuff you will be 100% vegan',
-    document: 'some kokotina',
+    document: 'something',
     variatons: [{
       itemCode: 2558,
       amount: 10,
