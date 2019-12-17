@@ -11,6 +11,12 @@ import { UserDiscountsComponent } from './users/user-profile-view/user-discounts
 import { BasketViewComponent } from './basket/basket-view/basket-view.component';
 import { PaymentViewComponent } from './payment/payment-view/payment-view.component';
 import { UserProfileViewComponent } from './users/user-profile-view/user-profile-view.component';
+import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
+import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
+import { AdminProductsComponent } from './admin/admin-products/admin-products.component';
+import { AdminCategoriesComponent } from './admin/admin-categories/admin-categories.component';
+import { AdminAuthGuard } from './admin/guards/admin-auth-guard';
+
 
 
 const routes: Routes = [
@@ -27,7 +33,12 @@ const routes: Routes = [
   {path: 'user-profile/address',component: UserBillingAddressComponent},
   {path: 'user-profile/subs',component: UserNewsSubsComponent},
   {path: 'user-profile/cards',component: UserDiscountsComponent},*/
-  {path: 'user-orders',component: UserOrdersViewComponent}
+  {path: 'user-orders',component: UserOrdersViewComponent},
+  { path: 'adminlogin', component: AdminLoginComponent},
+  { path: 'admin', component: AdminHomeComponent, canActivate: [AdminAuthGuard] },
+  { path: 'admin/products', component: AdminProductsComponent, canActivate: [AdminAuthGuard] },
+  { path: 'admin/categories', component: AdminCategoriesComponent, canActivate: [AdminAuthGuard] },
+  
 ];
 
 @NgModule({
