@@ -15,7 +15,7 @@ export class CategoryService {
 
   constructor(private _http: HttpClient) 
   { 
-    this.categoryUrl = environment.apiUrl + '/category';
+    this.categoryUrl = environment.apiUrl + '/categories';
   }
 
   private getDefaultCategory(): Observable<ProductCategory>{

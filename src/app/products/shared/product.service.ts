@@ -25,7 +25,7 @@ export class ProductService {
   private productsUrl: string;
 
   constructor(private _http: HttpClient) {
-    this.productsUrl = environment.apiUrl + "/product";
+    this.productsUrl = environment.apiUrl + "/products";
   }
 
   getAll(filter: ProductsFilter): Observable<ProductDto[]>{

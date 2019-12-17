@@ -36,7 +36,10 @@ import { CategoryBreadcrumbComponent } from './shared/category-breadcrumb/catego
 import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
 import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { AdminNavbarComponent } from './admin/admin-navbar/admin-navbar.component';
+import { AdminProductsComponent } from './admin/admin-products/admin-products.component';
+import { AdminCategoriesComponent } from './admin/admin-categories/admin-categories.component';
 import { ProductsOrderbyNamePipe } from './products/shared/products-orderby-name.pipe';
+import { AdminAuthGuard } from './admin/guards/admin-auth-guard';
 
 @NgModule({
   declarations: [
@@ -65,6 +68,8 @@ import { ProductsOrderbyNamePipe } from './products/shared/products-orderby-name
     AdminLoginComponent,
     AdminHomeComponent,
     AdminNavbarComponent,
+    AdminProductsComponent,
+    AdminCategoriesComponent,
     ProductsOrderbyNamePipe
   ],
   imports: [
@@ -88,7 +93,9 @@ import { ProductsOrderbyNamePipe } from './products/shared/products-orderby-name
   entryComponents:[
     LoginViewComponent
   ],
-  providers: [],
+  providers: [
+    AdminAuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

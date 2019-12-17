@@ -15,7 +15,7 @@ interface LoginModel{
 })
 export class AuthService {
 
-  private authUrl = 'https://petshop-jt.azurewebsites.net/api/admin/'
+  private authUrl = 'https://localhost:44303/api/user'
 
   users: LoginModel[] = [
     {

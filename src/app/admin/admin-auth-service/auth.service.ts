@@ -11,7 +11,7 @@ import { Observable, of } from 'rxjs';
 })
 export class AuthService {
 
-  private authUrl = 'https://petshop-jt.azurewebsites.net/token'
+  private authUrl = 'https://localhost:44303/token'
 
  
 
