@@ -1,1 +1,32 @@
 <app-admin-navbar></app-admin-navbar>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col">   
+            <ul>
+                <li (click)="prepareCreate()">ADD NEW Category</li>
+                <li *ngFor="let Category of Categories" 
+                    (click)="onSelect(Category)"
+                    [class.active]="Category === selectedCategory">
+                    <a>{{Category.name}}</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col">
+            <form *ngIf="isCreating || selectedCategory" [formGroup]="CategoryForm" (ngSubmit)="save()">
+                <h3 *ngIf="isCreating">New Category</h3>
+                <h3 *ngIf="!isCreating">{{selectedCategory.name | uppercase}} </h3>
+                
+                <p>
+                    <label>
+                        Name:
+                        <input type="text" formControlName="name">
+                    </label>
+                </p>
+
+                <button type="submit">Save</button>
+                <button *ngIf="selectedCategory" (click)="onDelete(selectedCategory)">Delete</button>
+            </form>
+        </div>
+    </div>
+</div>

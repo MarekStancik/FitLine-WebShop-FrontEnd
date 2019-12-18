@@ -33,7 +33,6 @@ import { QuillModule } from 'ngx-quill';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CategoryBreadcrumbComponent } from './shared/category-breadcrumb/category-breadcrumb.component';
-import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
 import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { AdminNavbarComponent } from './admin/admin-navbar/admin-navbar.component';
 import { AdminProductsComponent } from './admin/admin-products/admin-products.component';
@@ -65,7 +64,6 @@ import { AdminAuthGuard } from './admin/guards/admin-auth-guard';
     PaymentViewComponent,
     UserProfileViewComponent,
     CategoryBreadcrumbComponent,
-    AdminLoginComponent,
     AdminHomeComponent,
     AdminNavbarComponent,
     AdminProductsComponent,

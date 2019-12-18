@@ -15,7 +15,7 @@ interface LoginModel{
 })
 export class AuthService {
 
-  private authUrl = 'https://localhost:44303/api/user'
+  private authUrl = 'https://localhost:44303/token'
 
   users: LoginModel[] = [
     {

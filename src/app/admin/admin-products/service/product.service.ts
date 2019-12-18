@@ -43,12 +43,14 @@ private ProductsUrl = environment.apiUrl + "/products";
 
   update(Product:ProductModel): Observable<ProductModel>{
     this.prepareHeaders();
-    return this.http.put<ProductModel>(this.ProductsUrl + '/' + Product.id,Product);
+    return this.http.put<ProductModel>(this.ProductsUrl + '/' + Product.id,Product,httpOptions);
   }
 
   delete(Product: ProductModel): Observable<any>{
     this.prepareHeaders();
     const url = this.ProductsUrl + '/' + Product.id;
-    return this.http.delete(url);
+    return this.http.delete(url,httpOptions);
   }
+
+
 }

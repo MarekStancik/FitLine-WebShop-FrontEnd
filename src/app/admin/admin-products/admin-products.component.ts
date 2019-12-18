@@ -13,17 +13,12 @@ export class AdminProductsComponent implements OnInit {
   Products: ProductModel[];
   selectedProduct: ProductModel;
   isCreating: boolean;
-  isLoggedIn = true;
 
   ProductForm = new FormGroup({
     
     name: new FormControl(''),
     rating: new FormControl(''),
-    category: new FormControl(''),
     description: new FormControl(''),
-    supplier: new FormControl(''),
-    images: new FormControl(''),
-    document: new FormControl(''),
     price: new FormControl(''),
     quantity: new FormControl('')
     
@@ -55,6 +50,7 @@ export class AdminProductsComponent implements OnInit {
    */
   prepareCreate(){
     this.isCreating=true;
+    this.selectedProduct = null;
     this.ProductForm.reset();
   }
 
@@ -72,11 +68,7 @@ export class AdminProductsComponent implements OnInit {
     
     name: Product.name,
     rating: Product.rating,
-    category: Product.category,
     description: Product.description,
-    supplier: Product.supplier,
-    images: Product.images,
-    document: Product.document,
     price: Product.price,
     quantity: Product.quantity,
 

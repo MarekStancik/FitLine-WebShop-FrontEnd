@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
-import { AuthService } from '../admin-auth-service/auth.service';
+import { AuthService } from '../../shared/auth.service';
 
 @Injectable()
 
@@ -12,11 +12,18 @@ export class AdminAuthGuard implements CanActivate {
     canActivate() {
         if (this.authService.getToken()) {
             // logged in so return true
-            return true;
+            if(this.authService.isUserAdmin()){
+                return true;
+            }
+            else{
+                // not admin, navigate to home page
+                this.router.navigate(['/']);
+                return false;   
+            }
         }
 
         // not logged in so redirect to login page
-        this.router.navigate(['/adminlogin']);
+        this.router.navigate(['/']);
         return false;
     }
 

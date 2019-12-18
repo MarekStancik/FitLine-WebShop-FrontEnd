@@ -16,7 +16,7 @@ const httpOptions = {
 })
 export class CategoryService {
 
-  private CategorysUrl = 'https://localhost:44399/api/Categories';
+  private CategoriesUrl = 'https://localhost:44303/api/categories';
 
   constructor(private http: HttpClient,private authService: AuthService) { }
 
@@ -26,26 +26,26 @@ export class CategoryService {
 
   create(Category: ProductCategory):Observable<ProductCategory>{
     this.prepareHeaders();
-    return this.http.post<ProductCategory>(this.CategorysUrl,Category,httpOptions);
+    return this.http.post<ProductCategory>(this.CategoriesUrl,Category,httpOptions);
   }
 
   getAll(): Observable<ProductCategory[]>{
-    return this.http.get<ProductCategory[]>(this.CategorysUrl);
+    return this.http.get<ProductCategory[]>(this.CategoriesUrl);
   }
 
   getById(id: number): Observable<ProductCategory>{
-    const url = this.CategorysUrl + '/' + id;
+    const url = this.CategoriesUrl + '/' + id;
     return this.http.get<ProductCategory>(url);
   }
 
   update(Category:ProductCategory): Observable<ProductCategory>{
     this.prepareHeaders();
-    return this.http.put<ProductCategory>(this.CategorysUrl + '/' + Category.id,Category);
+    return this.http.put<ProductCategory>(this.CategoriesUrl + '/' + Category.id,Category);
   }
 
   delete(Category: ProductCategory): Observable<any>{
     this.prepareHeaders();
-    const url = this.CategorysUrl + '/' + Category.id;
+    const url = this.CategoriesUrl + '/' + Category.id;
     return this.http.delete(url);
   }
 }

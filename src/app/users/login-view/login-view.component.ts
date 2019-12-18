@@ -32,7 +32,7 @@ export class LoginViewComponent implements OnInit {
           isLoggedIn => {
             this.isWrongPass = !isLoggedIn;
             if(isLoggedIn){
-              const nextUrl = this.authService.isUserAdmin() ? '/admin' : '';
+              const nextUrl = this.authService.isUserAdmin() ? '/' : '/admin';
               this.bsModalRef.hide();           
             } 
         },

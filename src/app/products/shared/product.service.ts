@@ -8,6 +8,8 @@ import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http'
 import { environment } from '../../../environments/environment';
 import { ProductDto } from '../product-dto';
 import { ProductsFilter } from './products-filter';
+import { AuthService } from 'src/app/shared/auth.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +30,8 @@ export class ProductService {
     this.productsUrl = environment.apiUrl + "/products";
   }
 
+  
+
   getAll(filter: ProductsFilter): Observable<ProductDto[]>{
     if(filter === null)
       return this._http.get<ProductDto[]>(this.productsUrl);
@@ -46,4 +50,6 @@ export class ProductService {
   getById(id: number): Observable<ProductModel>{
     return this._http.get<ProductModel>(this.productsUrl + '/' + id);
   }
+
+  
 }
