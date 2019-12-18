@@ -39,6 +39,7 @@ import { AdminProductsComponent } from './admin/admin-products/admin-products.co
 import { AdminCategoriesComponent } from './admin/admin-categories/admin-categories.component';
 import { ProductsOrderbyNamePipe } from './products/shared/products-orderby-name.pipe';
 import { AdminAuthGuard } from './admin/guards/admin-auth-guard';
+import { AdminSupplierComponent } from './admin/admin-supplier/admin-supplier.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { AdminAuthGuard } from './admin/guards/admin-auth-guard';
     AdminNavbarComponent,
     AdminProductsComponent,
     AdminCategoriesComponent,
-    ProductsOrderbyNamePipe
+    ProductsOrderbyNamePipe,
+    AdminSupplierComponent
   ],
   imports: [
     BrowserModule,

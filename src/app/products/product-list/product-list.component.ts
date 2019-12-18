@@ -120,11 +120,21 @@ export class ProductListComponent implements OnInit {
       });
   }
 
+  private hasSupplier(suppMap: Map<SupplierDto,boolean>,supplierId: number): boolean
+  {
+    for (let it of this.brandFilter.keys()) {
+      if(it.id == supplierId){
+        return true;
+      }
+    }
+    return false;
+  }
+
   private initializeProducts(products: any){
     this.brandFilter = new Map<SupplierDto,boolean>();
     this.products = products;
     this.products.forEach(element => {
-      if(element.supplier){
+      if(element.supplier && !this.hasSupplier(this.brandFilter,element.supplier.id)){
         this.brandFilter.set(element.supplier,false);
       }
     });

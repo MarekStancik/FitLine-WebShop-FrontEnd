@@ -1,32 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Observable,of, pipe } from 'rxjs';
 import { ProductModel } from '../product.model';
-import { ProductsCategoryFilterPipe } from 'src/app/products/shared/products-category-filter.pipe';
-import { take, filter } from 'rxjs/operators';
-import { ProductCategory } from '../product-category';
 import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { ProductDto } from '../product-dto';
 import { ProductsFilter } from './products-filter';
 import { AuthService } from 'src/app/shared/auth.service';
 
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-type': 'application/json',
+    'Authorization': 'token'
+  })
+};
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class ProductService {
-/*
-  private initializeCategories(){
-    this.allCategories.forEach(element => {
-      if(element.parentCategory)
-        element.parentCategory.children.push(element);
-    });
-  }*/
 
   private productsUrl: string;
 
-  constructor(private _http: HttpClient) {
+  constructor(private _http: HttpClient,private authService: AuthService) {
     this.productsUrl = environment.apiUrl + "/products";
   }
 
@@ -51,5 +47,24 @@ export class ProductService {
     return this._http.get<ProductModel>(this.productsUrl + '/' + id);
   }
 
+  prepareHeaders(){
+    httpOptions.headers = httpOptions.headers.set('Authorization','Bearer ' + this.authService.getToken());
+  }
+
+  create(Product: ProductModel):Observable<any>{
+    this.prepareHeaders();
+    return this._http.post<ProductModel>(this.productsUrl,Product,httpOptions);
+  }
+
+  update(Product:ProductModel): Observable<any>{
+    this.prepareHeaders();
+    return this._http.put<ProductModel>(this.productsUrl + '/' + Product.id,Product,httpOptions);
+  }
+
+  delete(Product: ProductModel): Observable<any>{
+    this.prepareHeaders();
+    const url = this.productsUrl + '/' + Product.id;
+    return this._http.delete(url,httpOptions);
+  }
   
 }

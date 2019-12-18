@@ -12,7 +12,7 @@ export class ProductModel {
     images: string[];
     document: string;
     price: number;
-    quantity: number;
+    amount: number;
 
     soldCount?: number;
 

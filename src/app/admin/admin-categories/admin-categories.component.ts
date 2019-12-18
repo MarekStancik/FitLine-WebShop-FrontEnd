@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductCategory } from 'src/app/products/product-Category';
 import { FormGroup, FormControl } from '@angular/forms';
-import { CategoryService } from './service/Category.service'
+import { CategoryService } from '../../shared/category.service'
 
 @Component({
   selector: 'app-admin-Categories',
@@ -16,10 +16,10 @@ export class AdminCategoriesComponent implements OnInit {
 
   CategoryForm = new FormGroup({
     
-    name: new FormControl('')
-    
+    name: new FormControl(''),
+    parentCategory: new FormControl()
   });
-  constructor(private CategoryService: CategoryService) 
+  constructor(private _categoryService: CategoryService) 
   { 
 
   }
@@ -35,7 +35,7 @@ export class AdminCategoriesComponent implements OnInit {
   refresh() {
     this.isCreating = false;
     this.selectedCategory = null;
-    this.CategoryService.getAll().subscribe(receivedCategories => this.Categories = receivedCategories);
+    this._categoryService.getAll().subscribe(receivedCategories => this.Categories = receivedCategories);
   }
 
   /**
@@ -48,27 +48,70 @@ export class AdminCategoriesComponent implements OnInit {
     this.CategoryForm.reset();
   }
 
+  getCatById(id: number): ProductCategory{
+    let rval;
+    this.Categories.forEach(cat =>{ if(cat.id === id) rval = cat;});
+    return rval;
+  }
+
   save(){
-    const Category = this.CategoryForm.value;
-    if(!this.isCreating)
-      Category.id = this.selectedCategory.id;
-    var subcription = this.isCreating ? this.CategoryService.create(Category) : this.CategoryService.update(Category);
+    const formValues = this.CategoryForm.value;
+    let category: ProductCategory = {
+      id: this.selectedCategory ? this.selectedCategory.id : 0,
+      name: formValues.name,
+      parentCategory: this.getCatById(Number(formValues.parentCategory)),
+      children: null
+    };
+    
+    var subcription = this.isCreating ? this._categoryService.create(category) : this._categoryService.update(category);
     subcription.subscribe(_ => this.refresh());
   }
 
-  onSelect(Category: ProductCategory){
-    this.selectedCategory = Category;
-    this.CategoryForm.patchValue({
-    
-    name: Category.name,
-    
-
-
-    });
+  onSelect(category: ProductCategory){
+    this.isCreating = false;
+    this._categoryService.getByName(category.name)
+      .subscribe(newCat => {
+        this.selectedCategory = newCat;
+        this.CategoryForm.patchValue({
+          name: newCat.name,
+          parentCategory: newCat.parentCategory ? newCat.parentCategory.id : 0
+        });
+      });
   }
 
   onDelete(Category: ProductCategory){
-    this.CategoryService.delete(Category).subscribe(_ => this.refresh());
+    this._categoryService.delete(Category).subscribe(_ => this.refresh());
+  }
+
+  getCategoryChildren(cat: ProductCategory): number[]
+  {
+    let rval = new Array<number>();
+    if(cat.children){
+      cat.children.forEach(elem =>{
+        rval.push(elem.id);
+        if(elem.children){
+          rval = rval.concat(this.getCategoryChildren(elem));
+        }
+      });
+    }
+    return rval;
+  }
+
+  getParentsFor(cat: ProductCategory): ProductCategory[]
+  {
+    if(!cat){
+      return this.Categories;
+    }
+
+    let allChild = this.getCategoryChildren(cat);
+    allChild.push(cat.id);
+
+    let rval = new Array<ProductCategory>();
+    this.Categories.forEach(elem =>{
+      if(!allChild.includes(elem.id))
+        rval.push(elem);
+    });
+    return rval;
   }
 
 }

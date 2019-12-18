@@ -2,11 +2,12 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col">   
-            <ul>
-                <li (click)="prepareCreate()">ADD NEW Category</li>
+            <ul class="list-group">
+                <li (click)="prepareCreate()" class="list-group-item">ADD NEW Category</li>
                 <li *ngFor="let Category of Categories" 
                     (click)="onSelect(Category)"
-                    [class.active]="Category === selectedCategory">
+                    [class.active]="selectedCategory && Category.id === selectedCategory.id"
+                    class="list-group-item">
                     <a>{{Category.name}}</a>
                 </li>
             </ul>
@@ -23,6 +24,12 @@
                         <input type="text" formControlName="name">
                     </label>
                 </p>
+
+                <label for="parents">Parent Category:</label>
+                <select id="parents" [formGroup]="CategoryForm" formControlName="parentCategory">
+                    <option value="default">-- Select parent category --</option>
+                    <option *ngFor="let c of getParentsFor(selectedCategory)" [value]="c.id">{{c.name}}</option>
+                </select> 
 
                 <button type="submit">Save</button>
                 <button *ngIf="selectedCategory" (click)="onDelete(selectedCategory)">Delete</button>

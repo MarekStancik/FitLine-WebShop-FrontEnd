@@ -47,14 +47,6 @@ export class AuthService {
         return false;
       }
     }));
-    /*for (let index = 0; index < this.users.length; index++) {
-      const element = this.users[index];
-      if(element.username === username && element.password === password){
-        localStorage.setItem('currentUser',JSON.stringify({id: element.id,username,password,isAdmin: element.isAdmin,token: 'token'}));
-        return of(true);
-      }
-    }
-    return of(false);*/
   }
 
   getToken(): string {

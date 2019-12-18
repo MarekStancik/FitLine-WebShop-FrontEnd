@@ -3,28 +3,34 @@ import { Component, OnInit } from '@angular/core';
 interface Section{
   name: string;
   link: string;
+  enabled: boolean;
 }
 
 const SECTIONS: Section[] = [
   {
     name: 'Products',
-    link: '/admin/products'
+    link: '/admin/products',
+    enabled: true
   },
   {
     name: 'Categories',
-    link: '/admin/categories'
+    link: '/admin/categories',
+    enabled: true
   },
   {
     name: 'Orders',
-    link: '/admin/orders'
+    link: '/admin/orders',
+    enabled: false
   },
   {
     name: 'Invoices',
-    link: '/admin/invoices'
+    link: '/admin/invoices',
+    enabled: false
   },
   {
     name: 'Shipments',
-    link: '/admin/shipments'
+    link: '/admin/shipments',
+    enabled: false
   }
 
 ]

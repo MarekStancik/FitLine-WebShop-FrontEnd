@@ -7,7 +7,7 @@
                 <li class="list-group-item list-group-item-dark" (click)="prepareCreate()">ADD NEW Product</li>
                 <li class="list-group-item" *ngFor="let Product of Products" 
                     (click)="onSelect(Product)"
-                    [class.active]="Product === selectedProduct">
+                    [class.active]="selectedProduct && Product.id === selectedProduct.id">
                     <a>{{Product.name}}</a>
                 </li>
             </ul>
@@ -15,57 +15,64 @@
 
         <div class="col">
             <form *ngIf="isCreating || selectedProduct" [formGroup]="ProductForm" (ngSubmit)="save()">
-                <h3 *ngIf="isCreating">New Product</h3>
-                <h3 *ngIf="!isCreating">{{selectedProduct.name | uppercase}} {{selectedProduct.Description}} </h3>
-                
-                <p>
-                    <label>
-                        Name:
-                        <input type="text" formControlName="name">
-                    </label>
-                </p>
+                <fieldset>
+                    <h3 *ngIf="isCreating">New Product</h3>
+                    <h3 *ngIf="!isCreating">{{selectedProduct.name | uppercase}} {{selectedProduct.Description}} </h3>
+                    
+                    <div class="form-field ">
+                        <label>
+                            Name:
+                            <input type="text" formControlName="name">
+                        </label>
+                    </div>
+                        
+                    <div class="form-field ">
+                        <label>
+                            Rating:
+                            <input type="number" formControlName="rating">
+                        </label>
+                    </div>
+                    
+                    <div class="form-field ">
+                        <label>
+                            Description:
+                            <input type="text" formControlName="description">
+                        </label>
+                    </div>
+                    
+                    <div class="form-field ">
+                        <label>
+                            Price:
+                            <input type="number" formControlName="price">
+                        </label>
+                    </div>
 
-                <p>
-                    <label>
-                        Rating:
-                        <input type="text" formControlName="rating">
-                    </label>
-                </p>
+                    <div class="form-field ">
+                        <label>
+                            Quantity:
+                            <input type="number" formControlName="amount">
+                        </label>
+                    </div>
 
-                <p>
-                    <label>
-                        Description:
-                        <input type="text" formControlName="description">
-                    </label>
-                </p>
+                    <div class="form-field ">
+                        <label>Category:</label>
+                        <select class="ProductForm" [formGroup]="ProductForm" formControlName="category">
+                            <option value="default">-- Select your category--</option>
+                            <option *ngFor="let c of Categories" [value]="c.id">{{c.name}}</option>
+                        </select> 
+                    </div>
 
-                <p>
-                    <label>
-                        Price:
-                        <input type="text" formControlName="price">
-                    </label>
-                </p>
+                    <div class="form-field ">
+                        <label>Supplier:</label>
+                        <select class="ProductForm" [formGroup]="ProductForm" formControlName="supplier">
+                            <option value="default">-- Select supplier--</option>
+                            <option *ngFor="let s of suppliers" [value]="s.id">{{s.name}}</option>
+                        </select> 
+                    </div>
 
-                <p>
-                    <label>
-                        Quantity:
-                        <input type="text" formControlName="quantity">
-                    </label>
-                </p>
-
-                <p>
-                    <label>Category:</label>
-                    <select class="ProductForm" [formGroup]="ProductForm" formControlName="category">
-                        <option value="default">-- Select your category--</option>
-                        <option *ngFor="let c of Categories" [value]="c">{{c.name}}</option>
-                    </select> 
-                </p>
-
-
-                
-
-                <button *ngIf="selectedProduct" (click)="save(selectedProduct)">Save</button>
-                <button *ngIf="selectedProduct" (click)="onDelete(selectedProduct)">Delete</button>
+                    <button type="submit" *ngIf="isCreating || selectedProduct">Save</button>
+                    <button type="button" *ngIf="isCreating || selectedProduct" (click)="onDelete(selectedProduct)">Delete</button>
+                </fieldset>
             </form>
         </div>
     </div>

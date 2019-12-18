@@ -15,7 +15,7 @@
             MainSections are generated via ngFor 
             for easier route mapping and section enabling-->
             <li *ngFor="let section of sections" class="nav-item">
-                <a [routerLink]="[section.link]" routerLinkActive="active" class="nav-link">
+                <a [routerLink]="[section.link]" routerLinkActive="active" [class.disabled]="!section.enabled" class="nav-link">
                     {{section.name}}
                 </a>
             </li>
