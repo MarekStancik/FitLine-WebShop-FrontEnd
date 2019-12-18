@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
 interface LoginModel{
@@ -31,7 +31,12 @@ export class AuthService {
   login(username: string,password: string): Observable<boolean>
   {
     return this.http.post<any>(this.authUrl,{username,password})
-    .pipe(map(response => {
+    .pipe(
+      catchError(err => {
+        console.error(err);
+        return of(false);
+      }),
+      map(response => {
       const token = response.token;
       const isAdmin = response.isAdmin;
 

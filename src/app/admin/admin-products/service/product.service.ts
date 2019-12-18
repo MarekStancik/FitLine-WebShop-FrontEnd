@@ -27,7 +27,7 @@ private ProductsUrl = environment.apiUrl + "/products";
     httpOptions.headers = httpOptions.headers.set('Authorization','Bearer ' + this.authService.getToken());
   }
 
-  create(Product: ProductModel):Observable<ProductModel>{
+  create(Product: ProductModel):Observable<any>{
     this.prepareHeaders();
     return this.http.post<ProductModel>(this.ProductsUrl,Product,httpOptions);
   }
@@ -36,12 +36,12 @@ private ProductsUrl = environment.apiUrl + "/products";
     return this.http.get<ProductModel[]>(this.ProductsUrl);
   }
 
-  getById(id: number): Observable<ProductModel>{
+  getById(id: number): Observable<any>{
     const url = this.ProductsUrl + '/' + id;
     return this.http.get<ProductModel>(url);
   }
 
-  update(Product:ProductModel): Observable<ProductModel>{
+  update(Product:ProductModel): Observable<any>{
     this.prepareHeaders();
     return this.http.put<ProductModel>(this.ProductsUrl + '/' + Product.id,Product,httpOptions);
   }

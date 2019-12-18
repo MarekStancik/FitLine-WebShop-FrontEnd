@@ -40,12 +40,12 @@ export class CategoryService {
 
   update(Category:ProductCategory): Observable<ProductCategory>{
     this.prepareHeaders();
-    return this.http.put<ProductCategory>(this.CategoriesUrl + '/' + Category.id,Category);
+    return this.http.put<ProductCategory>(this.CategoriesUrl + '/' + Category.id,Category,httpOptions);
   }
 
   delete(Category: ProductCategory): Observable<any>{
     this.prepareHeaders();
     const url = this.CategoriesUrl + '/' + Category.id;
-    return this.http.delete(url);
+    return this.http.delete(url,httpOptions);
   }
 }

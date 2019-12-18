@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ProductModel } from 'src/app/products/product.model';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ProductService } from './service/Product.service'
+import { ProductCategory } from 'src/app/products/product-Category';
+import { CategoryService } from '../admin-categories/service/Category.service';
 
 @Component({
   selector: 'app-admin-Products',
@@ -11,6 +13,7 @@ import { ProductService } from './service/Product.service'
 export class AdminProductsComponent implements OnInit {
 
   Products: ProductModel[];
+  Categories: ProductCategory[];
   selectedProduct: ProductModel;
   isCreating: boolean;
 
@@ -20,12 +23,13 @@ export class AdminProductsComponent implements OnInit {
     rating: new FormControl(''),
     description: new FormControl(''),
     price: new FormControl(''),
-    quantity: new FormControl('')
+    quantity: new FormControl(''),
+    category: new FormControl('')
     
     
     
   });
-  constructor(private ProductService: ProductService) 
+  constructor(private ProductService: ProductService, private CategoryService: CategoryService) 
   { 
 
   }
@@ -41,7 +45,9 @@ export class AdminProductsComponent implements OnInit {
   refresh() {
     this.isCreating = false;
     this.selectedProduct = null;
+    this.CategoryService.getAll().subscribe(receivedCategories => this.Categories = receivedCategories);
     this.ProductService.getAll().subscribe(receivedProducts => this.Products = receivedProducts);
+    
   }
 
   /**
@@ -56,11 +62,20 @@ export class AdminProductsComponent implements OnInit {
 
   save(){
     const Product = this.ProductForm.value;
-    if(!this.isCreating)
+    if(!this.isCreating){
       Product.id = this.selectedProduct.id;
-    var subcription = this.isCreating ? this.ProductService.create(Product) : this.ProductService.update(Product);
-    subcription.subscribe(_ => this.refresh());
+      this.ProductService.update(Product).subscribe(_ => this.refresh());
+    }
+    else{
+      this.ProductService.create(Product).subscribe(_ => this.refresh());
+    }
+      
+    
   }
+
+
+  
+  
 
   onSelect(Product: ProductModel){
     this.selectedProduct = Product;
@@ -71,9 +86,12 @@ export class AdminProductsComponent implements OnInit {
     description: Product.description,
     price: Product.price,
     quantity: Product.quantity,
+    category: Product.category
 
 
     });
+    
+  
   }
 
   onDelete(Product: ProductModel){

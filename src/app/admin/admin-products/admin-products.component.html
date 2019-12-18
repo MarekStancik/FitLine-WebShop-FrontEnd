@@ -3,9 +3,9 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col">   
-            <ul>
-                <li (click)="prepareCreate()">ADD NEW Product</li>
-                <li *ngFor="let Product of Products" 
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-dark" (click)="prepareCreate()">ADD NEW Product</li>
+                <li class="list-group-item" *ngFor="let Product of Products" 
                     (click)="onSelect(Product)"
                     [class.active]="Product === selectedProduct">
                     <a>{{Product.name}}</a>
@@ -53,7 +53,18 @@
                     </label>
                 </p>
 
-                <button type="submit">Save</button>
+                <p>
+                    <label>Category:</label>
+                    <select class="ProductForm" [formGroup]="ProductForm" formControlName="category">
+                        <option value="default">-- Select your category--</option>
+                        <option *ngFor="let c of Categories" [value]="c">{{c.name}}</option>
+                    </select> 
+                </p>
+
+
+                
+
+                <button *ngIf="selectedProduct" (click)="save(selectedProduct)">Save</button>
                 <button *ngIf="selectedProduct" (click)="onDelete(selectedProduct)">Delete</button>
             </form>
         </div>
