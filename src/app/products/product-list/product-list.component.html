@@ -46,7 +46,7 @@
             <!--Product list-->
             <div *ngIf="products && products.length > 0; else noProducts" class="row product-list">
                 <div *ngFor="let product of products" class="card col-md-4 pt-3 product-card">
-                    <img [src]="product.image ? product.image : '../../../assets/no_image.png'" class="card-img-top" alt="...">
+                    <img [src]="product.image ? product.image : '../../../assets/no_image.png'" class="card-img-top" alt="..." style="max-height: 200px;">
                     <div class="card-body">
                         <progressbar [max]="maxRating" [value]="product.rating">
                             <span>{{product.rating | number:'1.0-1'}} / {{maxRating}}</span>
